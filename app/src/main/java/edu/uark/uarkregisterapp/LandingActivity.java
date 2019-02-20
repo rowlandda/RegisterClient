@@ -26,7 +26,7 @@ public class LandingActivity extends AppCompatActivity {
 			getString(R.string.intent_extra_product),
 			new ProductTransition()
 		);
-
+		//note to self to look at this code as it provides implmentation of buttons/product page
 		this.startActivity(intent);
 	}
 }
