@@ -7,6 +7,10 @@ import android.view.View;
 
 import edu.uark.uarkregisterapp.models.transition.ProductTransition;
 
+//==========================================
+//  Landing Page when the app first opens
+//==========================================
+
 public class LandingActivity extends AppCompatActivity {
 
 	@Override
@@ -15,10 +19,17 @@ public class LandingActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_landing);
 	}
 
+//==========================================
+//  Button that leads to the Product Page
+//==========================================
 	public void displayAllProductsButtonOnClick(View view) {
 		this.startActivity(new Intent(getApplicationContext(), ProductsListingActivity.class));
 	}
 
+
+//==========================================
+//  Button To create a product from the app
+//==========================================
 	public void createProductButtonOnClick(View view) {
 		Intent intent = new Intent(getApplicationContext(), ProductViewActivity.class);
 
@@ -26,7 +37,7 @@ public class LandingActivity extends AppCompatActivity {
 			getString(R.string.intent_extra_product),
 			new ProductTransition()
 		);
-		//note to self to look at this code as it provides implmentation of buttons/product page
+		//note to self to look at this code as it provides implementation of buttons/product page
 		this.startActivity(intent);
 	}
 }
