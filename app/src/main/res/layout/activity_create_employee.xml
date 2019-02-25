@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/activity_landing"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="edu.uark.uarkregisterapp.LandingActivity">
+
+    <TextView
+        android:id="@+id/create_employee_welcome"
+        android:layout_width="251dp"
+        android:layout_height="43dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/create_employee_welcome"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/first_name"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/create_employee_welcome"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:hint="@string/first_name" />
+
+    <EditText
+        android:id="@+id/last_name"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/first_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:hint="@string/last_name" />
+
+    <EditText
+        android:id="@+id/employee_password"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/last_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:inputType="textPassword"
+        android:hint="@string/password"/>
+
+    <Button
+        android:id="@+id/create_employee_button"
+        android:layout_width="152dp"
+        android:layout_height="64dp"
+        android:layout_below="@+id/employee_password"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="270dp"
+        android:layout_marginRight="80dp"
+        android:layout_marginBottom="113dp"
+        android:text="@string/create" />
+
+</RelativeLayout>
