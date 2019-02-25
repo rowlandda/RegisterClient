@@ -26,6 +26,11 @@ public class LandingActivity extends AppCompatActivity {
 		this.startActivity(new Intent(getApplicationContext(), ProductsListingActivity.class));
 	}
 
+	//Button that leads to the Create Employee page
+
+	public void createEmployeeOnClick(View view) {
+		this.startActivity(new Intent(getApplicationContext(), CreateEmployeeActivity.class));
+	}
 
 //==========================================
 //  Button To create a product from the app
@@ -41,3 +46,5 @@ public class LandingActivity extends AppCompatActivity {
 		this.startActivity(intent);
 	}
 }
+
+

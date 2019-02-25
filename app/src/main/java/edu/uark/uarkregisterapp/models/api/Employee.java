@@ -77,7 +77,7 @@ public class Employee implements ConvertToJsonInterface, LoadFromJsonInterface<E
         return this;
     }
 
-    //the fieldname in the database is actually manage.  unsure if this will cause problems later
+    //the fieldname in the database is actually "manage".  unsure if this will cause problems later
     private String manager;
     public String getManager() {
         return this.manager;

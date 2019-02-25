@@ -49,14 +49,13 @@
 
     <Button
         android:id="@+id/create_employee_button"
-        android:layout_width="152dp"
-        android:layout_height="64dp"
+        android:layout_width="176dp"
+        android:layout_height="68dp"
         android:layout_below="@+id/employee_password"
         android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="270dp"
-        android:layout_marginRight="80dp"
-        android:layout_marginBottom="113dp"
+        android:layout_marginTop="57dp"
+        android:layout_marginRight="70dp"
+        android:layout_marginBottom="322dp"
         android:text="@string/create" />
 
 </RelativeLayout>

@@ -39,4 +39,14 @@
         android:text="@string/button_create_product"
         android:onClick="createProductButtonOnClick"/>
 
+    <Button
+        android:id="@+id/create_employee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button_create_product"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="@string/create_new_employee"
+        android:onClick="createEmployeeOnClick"/>
+
 </RelativeLayout>
