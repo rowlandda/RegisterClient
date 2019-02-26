@@ -16,7 +16,11 @@ import edu.uark.uarkregisterapp.models.api.interfaces.LoadFromJsonInterface;
 import edu.uark.uarkregisterapp.models.transition.ProductTransition;
 
 public class Product implements ConvertToJsonInterface, LoadFromJsonInterface<Product> {
+
 	private UUID id;
+	//==================================================
+	//===Id Getter and Setter
+	//==================================================
 	public UUID getId() {
 		return this.id;
 	}
@@ -26,6 +30,9 @@ public class Product implements ConvertToJsonInterface, LoadFromJsonInterface<Pr
 	}
 
 	private String lookupCode;
+	//==================================================
+	//===Lookup Getter and Setter
+	//==================================================
 	public String getLookupCode() {
 		return this.lookupCode;
 	}
@@ -35,6 +42,9 @@ public class Product implements ConvertToJsonInterface, LoadFromJsonInterface<Pr
 	}
 
 	private int count;
+	//==================================================
+	//===Count Getter and Setter
+	//==================================================
 	public int getCount() {
 		return this.count;
 	}
@@ -44,6 +54,9 @@ public class Product implements ConvertToJsonInterface, LoadFromJsonInterface<Pr
 	}
 
 	private Date createdOn;
+	//==================================================
+	//===CreatedOn Getter and Setter
+	//==================================================
 	public Date getCreatedOn() {
 		return this.createdOn;
 	}
@@ -82,7 +95,8 @@ public class Product implements ConvertToJsonInterface, LoadFromJsonInterface<Pr
 			jsonObject.put(ProductFieldName.ID.getFieldName(), this.id.toString());
 			jsonObject.put(ProductFieldName.LOOKUP_CODE.getFieldName(), this.lookupCode);
 			jsonObject.put(ProductFieldName.COUNT.getFieldName(), this.count);
-			jsonObject.put(ProductFieldName.CREATED_ON.getFieldName(), (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US)).format(this.createdOn));
+			jsonObject.put(ProductFieldName.CREATED_ON.getFieldName(),
+					(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US)).format(this.createdOn));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
