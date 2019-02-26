@@ -38,5 +38,7 @@
     <string name="username">Username</string>
     <string name="login_password">Password</string>
     <string name="sign_in_to_proceed">Sign in to proceed</string>
+    <string name="welcome_message_HomeScreen">Welcome {name}! What would you like to do next?</string>
+    <string name="Start_Trans">Start Transaction</string>
 
 </resources>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/activity_landing"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="edu.uark.uarkregisterapp.LandingActivity">
+
+    <TextView
+        android:id="@+id/welcome_message_HomeScreen"
+        android:layout_width="253dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/welcome_message_HomeScreen"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/start_trans_button"
+        android:layout_width="176dp"
+        android:layout_height="68dp"
+        android:layout_below="@+id/welcome_message_HomeScreen"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="57dp"
+        android:layout_marginEnd="112dp"
+        android:layout_marginBottom="15dp"
+        android:text="@string/Start_Trans" />
+
+    <Button
+        android:id="@+id/create_employee_Home_button"
+        android:layout_width="176dp"
+        android:layout_height="68dp"
+        android:layout_below="@+id/start_trans_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="112dp"
+
+        android:text="@string/create_new_employee" />
+
+</RelativeLayout>
