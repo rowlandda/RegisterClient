@@ -34,4 +34,9 @@
     <string name="password">Password</string>
     <string name="create">Save</string>
     <string name="create_new_employee">Create new employee</string>
+    <string name="login">Login</string>
+    <string name="username">Username</string>
+    <string name="login_password">Password</string>
+    <string name="sign_in_to_proceed">Sign in to proceed</string>
+
 </resources>

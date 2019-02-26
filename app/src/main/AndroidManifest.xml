@@ -11,12 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".CreateEmployeeActivity"></activity>
-        <activity android:name=".LandingActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity
+            android:name=".LandingActivity"
+            android:parentActivityName=".LoginScreenActivity">
         </activity>
         <activity
             android:name=".ProductsListingActivity"
@@ -31,6 +28,14 @@
             android:name=".ProductViewActivity"
             android:label="@string/title_activity_product_view"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name="LoginScreenActivity"
+            android:label="Login">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter></activity>
     </application>
 
 </manifest>

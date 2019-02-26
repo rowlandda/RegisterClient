@@ -8,7 +8,7 @@ import android.view.View;
 import edu.uark.uarkregisterapp.models.transition.ProductTransition;
 
 //==========================================
-//  Landing Page when the app first opens
+//  Landing Page after logging in
 //==========================================
 
 public class LandingActivity extends AppCompatActivity {
@@ -42,7 +42,6 @@ public class LandingActivity extends AppCompatActivity {
 			getString(R.string.intent_extra_product),
 			new ProductTransition()
 		);
-		//note to self to look at this code as it provides implementation of buttons/product page
 		this.startActivity(intent);
 	}
 }
