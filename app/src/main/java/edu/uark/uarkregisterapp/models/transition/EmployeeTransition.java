@@ -58,7 +58,8 @@ public class EmployeeTransition implements Parcelable {
     }
 
     public EmployeeTransition setActive(String active) {
-        this.active = (active.equals("yes")) || (active.equals("Yes")) || (active.equals("true")) || (active.equals("True"));
+        this.active = (active.equals("yes")) || (active.equals("Yes")) ||
+                      (active.equals("true")) || (active.equals("True"));
         return this;
     }
 
@@ -174,7 +175,8 @@ public class EmployeeTransition implements Parcelable {
 
         //the choice of active as a boolean seems like its more trouble than its worth at this point
         String activeString = employeeTransitionParcel.readString();
-        this.active = activeString.equals("true");
+        if (activeString != null)
+            this.active = activeString.equals("true");
 
         this.role = employeeTransitionParcel.readString();
         this.manager = employeeTransitionParcel.readString();

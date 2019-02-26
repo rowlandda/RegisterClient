@@ -49,8 +49,8 @@
 
     <Button
         android:id="@+id/create_employee_button"
-        android:layout_width="176dp"
-        android:layout_height="68dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/employee_password"
         android:layout_alignParentRight="true"
         android:layout_marginTop="57dp"
