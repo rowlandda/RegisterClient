@@ -38,7 +38,10 @@
     <string name="username">Username</string>
     <string name="login_password">Password</string>
     <string name="sign_in_to_proceed">Sign in to proceed</string>
-    <string name="welcome_message_HomeScreen">Welcome {name}! What would you like to do next?</string>
-    <string name="Start_Trans">Start Transaction</string>
+    <string name="welcome_message_HomeScreen">Make some SALES!!!!</string>
+    <string name="start_Trans">Start Transaction</string>
+    <string name="product_report">Sales Report: Product</string>
+    <string name="cashier_report">Sales Report: Cashier</string>
+    <string name="logout">Log Out</string>
 
 </resources>
