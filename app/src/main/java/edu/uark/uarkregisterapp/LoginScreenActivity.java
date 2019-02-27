@@ -18,10 +18,10 @@ public class LoginScreenActivity extends AppCompatActivity {
     }
 //==========================================
 //	Button to proceed with Login process. if
-//  successful, displays landing page
+//  successful, displays Home Screen
 //==========================================
 
-    public void displayLandingPageOnClick(View view) {
-        this.startActivity(new Intent(getApplicationContext(), LandingActivity.class));
+    public void displayHomeScreenOnClick(View view) {
+        this.startActivity(new Intent(getApplicationContext(), HomeScreen.class));
     }
 }
