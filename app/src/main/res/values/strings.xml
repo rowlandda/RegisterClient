@@ -40,5 +40,7 @@
     <string name="sign_in_to_proceed">Sign in to proceed</string>
     <string name="welcome_message_HomeScreen">Welcome {name}! What would you like to do next?</string>
     <string name="Start_Trans">Start Transaction</string>
-
+    <string name="alert_dialog_employee_create_success">Employee Created!</string>
+    <string name="alert_dialog_employee_create_failure">Unable to create...</string>
+    <string name="alert_dialog_employee_create">Creating...</string>
 </resources>

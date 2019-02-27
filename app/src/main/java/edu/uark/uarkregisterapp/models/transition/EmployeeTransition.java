@@ -168,7 +168,6 @@ public class EmployeeTransition implements Parcelable {
     //copy constructor???
     private EmployeeTransition(Parcel employeeTransitionParcel) {
         this.id = (new ByteToUUIDConverterCommand()).setValueToConvert(employeeTransitionParcel.createByteArray()).execute();
-        this.l_name = employeeTransitionParcel.readString();
         this.f_name = employeeTransitionParcel.readString();
         this.l_name = employeeTransitionParcel.readString();
         this.employeeid = employeeTransitionParcel.readString();
