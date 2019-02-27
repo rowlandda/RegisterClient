@@ -17,8 +17,8 @@
     <string name="text_view_label_products_count">Count:</string>
     <string name="text_view_label_products_created_on">Created On:</string>
     <string name="alert_dialog_products_loading">Loading Products</string>
-    <string name="alert_dialog_product_save">Saving Product...</string>
-    <string name="alert_dialog_product_delete">Deleting Product...</string>
+    <string name="alert_dialog_product_save">Saving Product…</string>
+    <string name="alert_dialog_product_delete">Deleting Product…</string>
     <string name="alert_dialog_product_save_success">The product was successfully saved.</string>
     <string name="alert_dialog_product_save_failure">An issue was encountered when attempting to save the product. The changes were not saved.</string>
     <string name="alert_dialog_product_delete_success">The product was successfully deleted.</string>
@@ -28,6 +28,7 @@
     <string name="validation_product_lookup_code">Product lookup code may not be empty.</string>
     <string name="validation_product_count">Product count must be a number and may not be negative.</string>
     <string name="intent_extra_product">intent_extra_product</string>
+    <string name="intent_create_employee">intent_create_employee</string>
     <string name="create_employee_welcome">Create new employee.</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
@@ -44,7 +45,10 @@
     <string name="cashier_report">Sales Report: Cashier</string>
     <string name="logout">Log Out</string>
     <string name="alert_dialog_employee_create_success">Employee Created!</string>
-    <string name="alert_dialog_employee_create_failure">Unable to Create...</string>
-    <string name="alert_dialog_employee_create">Creating...</string>
+    <string name="alert_dialog_employee_create_failure">Unable to Create…</string>
+    <string name="alert_dialog_employee_create">Creating…</string>
+    <string name="validation_first_name">First Name cannot be blank</string>
+    <string name="validation_last_name">Last Name cannot be blank</string>
+    <string name="validation_password">Password cannot be blank</string>
 
 </resources>

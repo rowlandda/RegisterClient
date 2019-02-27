@@ -39,6 +39,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="112dp"
+        android:onClick="createNewEmployeeButton"
         android:text="@string/create_new_employee" />
 
     //Button Design for Product Sales Report
