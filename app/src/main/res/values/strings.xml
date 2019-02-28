@@ -50,6 +50,5 @@
     <string name="validation_first_name">First Name cannot be blank</string>
     <string name="validation_last_name">Last Name cannot be blank</string>
     <string name="validation_password">Password cannot be blank</string>
-    <string name="create_new_product">product</string>
 
 </resources>

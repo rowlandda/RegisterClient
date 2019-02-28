@@ -1,13 +1,10 @@
 package edu.uark.uarkregisterapp;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 
@@ -20,29 +17,17 @@ import edu.uark.uarkregisterapp.models.api.ApiResponse;
 import edu.uark.uarkregisterapp.models.api.Employee;
 import edu.uark.uarkregisterapp.models.api.services.EmployeeService;
 import edu.uark.uarkregisterapp.models.transition.EmployeeTransition;
-import edu.uark.uarkregisterapp.models.transition.ProductTransition;
 
 public class CreateEmployeeActivity extends AppCompatActivity {
 
     private EmployeeTransition employeeTransition;
-
-
-    public void createProductButtonOnClick(View view) {
-        Intent intent = new Intent(getApplicationContext(), ProductViewActivity.class);
-
-        intent.putExtra(
-                getString(R.string.intent_extra_product),
-                new ProductTransition()
-        );
-        this.startActivity(intent);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_employee);
 
-        this.employeeTransition = this.getIntent().getParcelableExtra(this.getString(R.string.intent_create_employee));
+        this.employeeTransition = this.getIntent().getParcelableExtra("intent_create_employee");
     }
 
     private EditText getEmployeeFNameEditText() {
@@ -106,6 +91,7 @@ public class CreateEmployeeActivity extends AppCompatActivity {
         if (!this.validateInput()) {
             return;
         }
+
         (new CreateEmployeeTask()).execute();
     }
 
@@ -118,6 +104,7 @@ public class CreateEmployeeActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... params) {
             Employee employee = (new Employee()).
+                    setId(employeeTransition.getId()).
                     setFname(getEmployeeFNameEditText().getText().toString()).
                     setLname(getEmployeeLNameEditText().getText().toString()).
                     setPassword(getEmployeePasswordEditText().getText().toString());
@@ -131,7 +118,6 @@ public class CreateEmployeeActivity extends AppCompatActivity {
             if (apiResponse.isValidResponse()) {
                 employeeTransition.setFname(apiResponse.getData().getFname());
                 employeeTransition.setLname(apiResponse.getData().getLname());
-                employeeTransition.setPassword(apiResponse.getData().getPassword());
             }
 
             return apiResponse.isValidResponse();

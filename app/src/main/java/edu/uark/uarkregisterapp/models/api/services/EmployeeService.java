@@ -17,10 +17,10 @@ package edu.uark.uarkregisterapp.models.api.services;
         import edu.uark.uarkregisterapp.models.api.interfaces.PathElementInterface;
 
 public class EmployeeService extends BaseRemoteService {
-    public ApiResponse<Employee> getEmployee(UUID ID) {
+    public ApiResponse<Employee> getEmployee(UUID productId) {
         return this.readEmployeeDetailsFromResponse(
                 this.<Employee>performGetRequest(
-                        this.buildPath(ID)
+                        this.buildPath(productId)
                 )
         );
     }

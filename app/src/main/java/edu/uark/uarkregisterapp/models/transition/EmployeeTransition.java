@@ -52,13 +52,14 @@ public class EmployeeTransition implements Parcelable {
         return this;
     }
 
-    private String active;
-    public String getActive() {
+    private Boolean active;
+    public Boolean getActive() {
         return this.active;
     }
 
     public EmployeeTransition setActive(String active) {
-        this.active = active;
+        this.active = (active.equals("yes")) || (active.equals("Yes")) ||
+                      (active.equals("true")) || (active.equals("True"));
         return this;
     }
 
@@ -108,7 +109,15 @@ public class EmployeeTransition implements Parcelable {
         destination.writeString(this.f_name);
         destination.writeString(this.l_name);
         destination.writeString(this.employeeid);
-        destination.writeString(this.active);
+
+        //convert boolean variable 'active' to string
+        String activeString;
+        if (this.active)
+            activeString = "true";
+        else
+            activeString = "false";
+        destination.writeString(activeString);
+
         destination.writeString(this.role);
         destination.writeString(this.manager);
         destination.writeString(this.password);
@@ -136,7 +145,7 @@ public class EmployeeTransition implements Parcelable {
         this.f_name = StringUtils.EMPTY;
         this.l_name = StringUtils.EMPTY;
         this.employeeid = "-1";
-        this.active = StringUtils.EMPTY;
+        this.active = false;
         this.role = StringUtils.EMPTY;
         this.manager = StringUtils.EMPTY;
         this.password = StringUtils.EMPTY;
@@ -162,7 +171,12 @@ public class EmployeeTransition implements Parcelable {
         this.f_name = employeeTransitionParcel.readString();
         this.l_name = employeeTransitionParcel.readString();
         this.employeeid = employeeTransitionParcel.readString();
-        this.active = employeeTransitionParcel.readString();
+
+        //the choice of active as a boolean seems like its more trouble than its worth at this point
+        String activeString = employeeTransitionParcel.readString();
+        if (activeString != null)
+            this.active = activeString.equals("true");
+
         this.role = employeeTransitionParcel.readString();
         this.manager = employeeTransitionParcel.readString();
         this.password = employeeTransitionParcel.readString();
