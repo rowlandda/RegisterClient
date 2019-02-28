@@ -57,13 +57,13 @@ public class Employee implements ConvertToJsonInterface, LoadFromJsonInterface<E
         return this;
     }
 
-    private Boolean active;
-    public Boolean getActive() {
+    private String active;
+    public String getActive() {
         return this.active;
     }
 
     public Employee setActive(String active) {
-        this.active = (active.equals("yes")) || (active.equals("Yes")) || (active.equals("true")) || (active.equals("True"));
+        this.active = active;
         return this;
     }
 
@@ -118,10 +118,7 @@ public class Employee implements ConvertToJsonInterface, LoadFromJsonInterface<E
         this.f_name = rawJsonObject.optString(EmployeeFieldName.F_NAME.getFieldName());
         this.l_name = rawJsonObject.optString(EmployeeFieldName.L_NAME.getFieldName());
         this.employeeid = rawJsonObject.optString(EmployeeFieldName.EMPLOYEEID.getFieldName());
-
-        //the string in the active field must read "true" for this to register true
-        String active = rawJsonObject.optString(EmployeeFieldName.ACTIVE.getFieldName());
-        this.active = active.equals("true");
+        this.active = rawJsonObject.optString(EmployeeFieldName.ACTIVE.getFieldName());
 
         this.role = rawJsonObject.optString(EmployeeFieldName.ROLE.getFieldName());
         this.manager = rawJsonObject.optString(EmployeeFieldName.MANAGER.getFieldName());
@@ -149,8 +146,7 @@ public class Employee implements ConvertToJsonInterface, LoadFromJsonInterface<E
             jsonObject.put(EmployeeFieldName.F_NAME.getFieldName(), this.f_name);
             jsonObject.put(EmployeeFieldName.L_NAME.getFieldName(), this.l_name);
             jsonObject.put(EmployeeFieldName.EMPLOYEEID.getFieldName(), this.employeeid);
-            //remember active is a boolean
-            jsonObject.put(EmployeeFieldName.ACTIVE.getFieldName(), this.active.toString());
+            jsonObject.put(EmployeeFieldName.ACTIVE.getFieldName(), this.active);
             jsonObject.put(EmployeeFieldName.ROLE.getFieldName(), this.role);
             jsonObject.put(EmployeeFieldName.MANAGER.getFieldName(), this.manager);
             jsonObject.put(EmployeeFieldName.PASSWORD.getFieldName(), this.password);
@@ -165,13 +161,12 @@ public class Employee implements ConvertToJsonInterface, LoadFromJsonInterface<E
     //constructor with no parameters
     public Employee() {
         this.id = new UUID(0, 0);
-        this.f_name = "";
-        this.l_name = "";
+        this.f_name = StringUtils.EMPTY;
+        this.l_name = StringUtils.EMPTY;
         this.employeeid = "-1";
-        this.active = false;
-        this.role = "";
-        this.manager = "";
-        //default password is password
+        this.active = StringUtils.EMPTY;
+        this.role = StringUtils.EMPTY;
+        this.manager = StringUtils.EMPTY;
         this.password = "password";
         this.createdOn = new Date();
     }
