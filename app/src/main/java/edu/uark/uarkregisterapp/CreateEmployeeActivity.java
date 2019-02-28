@@ -1,6 +1,7 @@
 package edu.uark.uarkregisterapp;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,7 @@ public class CreateEmployeeActivity extends AppCompatActivity {
 
     private EmployeeTransition employeeTransition;
 
+    //this is done before everything
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +32,7 @@ public class CreateEmployeeActivity extends AppCompatActivity {
         this.employeeTransition = this.getIntent().getParcelableExtra("intent_create_employee");
     }
 
+    //grab text from the text fields in the view
     private EditText getEmployeeFNameEditText() {
         return (EditText) this.findViewById(R.id.first_name);
     }
@@ -42,6 +45,7 @@ public class CreateEmployeeActivity extends AppCompatActivity {
         return (EditText) this.findViewById(R.id.employee_password);
     }
 
+    //check for invalid values for name, password
     private boolean validateInput() {
         boolean inputIsValid = true;
         String validationMessage = StringUtils.EMPTY;
@@ -95,34 +99,41 @@ public class CreateEmployeeActivity extends AppCompatActivity {
         (new CreateEmployeeTask()).execute();
     }
 
+    //this creates an employee object then converts it to json for the server
     private class CreateEmployeeTask extends AsyncTask<Void, Void, Boolean> {
         @Override
         protected void onPreExecute() {
             this.savingEmployeeAlert.show();
         }
 
+        //create employee object from the values in the text fields
         @Override
         protected Boolean doInBackground(Void... params) {
             Employee employee = (new Employee()).
-                    setId(employeeTransition.getId()).
                     setFname(getEmployeeFNameEditText().getText().toString()).
                     setLname(getEmployeeLNameEditText().getText().toString()).
                     setPassword(getEmployeePasswordEditText().getText().toString());
 
+            //build the string to send to server.  if uuid is 0's then make new
+            //if not then update the the employee tuple
             ApiResponse<Employee> apiResponse = (
                     (employee.getId().equals(new UUID(0, 0)))
                             ? (new EmployeeService()).createEmployee(employee)
                             : (new EmployeeService()).updateEmployee(employee)
             );
 
+            //if successful then make an employeeTransition object to pass to the next
+            //view
             if (apiResponse.isValidResponse()) {
                 employeeTransition.setFname(apiResponse.getData().getFname());
                 employeeTransition.setLname(apiResponse.getData().getLname());
+                employeeTransition.setPassword(apiResponse.getData().getPassword());
             }
 
             return apiResponse.isValidResponse();
         }
 
+        //alert notification information
         @Override
         protected void onPostExecute(Boolean successfulSave) {
             String message;
@@ -138,11 +149,13 @@ public class CreateEmployeeActivity extends AppCompatActivity {
             new AlertDialog.Builder(CreateEmployeeActivity.this).
                     setMessage(message).
                     setPositiveButton(
-                            R.string.button_dismiss,
+                            R.string.home,
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+                                    //needs to go to homepage but not sure how right now
                                     dialog.dismiss();
                                 }
+
                             }
                     ).
                     create().
