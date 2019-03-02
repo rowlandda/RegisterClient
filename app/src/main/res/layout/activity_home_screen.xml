@@ -28,6 +28,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="57dp"
         android:layout_marginEnd="112dp"
+        android:onClick="startTransactionOnClick"
         android:text="@string/start_Trans" />
 
     //Button design for Create New Employee
@@ -51,6 +52,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="112dp"
+        android:onClick="salesReportProductOnClick"
         android:text="@string/product_report" />
 
     //Button design for Cashier Sales Report
@@ -62,6 +64,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="112dp"
+        android:onClick="salesReportCashierOnClick"
         android:text="@string/cashier_report" />
 
     //Button design for Log Out
@@ -73,6 +76,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
         android:layout_marginStart="112dp"
+        android:onClick="logOutOnClick"
         android:text="@string/logout" />
 
 </RelativeLayout>
