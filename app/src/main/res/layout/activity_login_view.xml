@@ -26,28 +26,28 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/sign_in_to_proceed"
+        android:text="@string/sign_in_message"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_welcome2" />
 
     <EditText
-        android:id="@+id/Username_field"
+        android:id="@+id/employee_id"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="99dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="99dp"
         android:ems="10"
-        android:hint="@string/username"
+        android:hint="@string/employee_id"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_page_welcome" />
 
     <EditText
-        android:id="@+id/Password_field"
+        android:id="@+id/employee_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="99dp"
@@ -58,7 +58,7 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Username_field" />
+        app:layout_constraintTop_toBottomOf="@+id/employee_id" />
 
     <Button
         android:id="@+id/button_login"
@@ -67,10 +67,10 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:onClick="displayHomeScreenOnClick"
+        android:onClick="Login_Attempt_Task"
         android:text="@string/login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Password_field" />
+        app:layout_constraintTop_toBottomOf="@+id/employee_password" />
 
 </android.support.constraint.ConstraintLayout>

@@ -35,10 +35,10 @@
     <string name="password">Password</string>
     <string name="create">Create</string>
     <string name="create_new_employee">Create new employee</string>
-    <string name="login">Login</string>
-    <string name="username">Username</string>
+    <string name="login">Log In</string>
+    <string name="employee_id">Employee ID</string>
     <string name="login_password">Password</string>
-    <string name="sign_in_to_proceed">Sign in to proceed</string>
+    <string name="sign_in_message">Welcome! Please log in.</string>
     <string name="welcome_message_HomeScreen">Make some SALES!!!!</string>
     <string name="start_Trans">Start Transaction</string>
     <string name="product_report">Sales Report: Product</string>
@@ -51,5 +51,10 @@
     <string name="validation_last_name">Last Name cannot be blank</string>
     <string name="validation_password">Password cannot be blank</string>
     <string name="home">Home</string>
+    <string name="alert_dialog_logging_in">Logging you in...</string>
+    <string name="alert_dialog_no_employees_title">No Employees Exist</string>
+    <string name="alert_dialog_no_employees">Please create your first Employee</string>
+    <string name="alert_dialog_login_success">Logged In.</string>
+    <string name="alert_dialog_login_failure">ID or Password is incorrect.</string>
 
 </resources>
