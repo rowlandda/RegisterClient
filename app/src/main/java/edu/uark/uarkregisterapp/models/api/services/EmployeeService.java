@@ -17,10 +17,21 @@ package edu.uark.uarkregisterapp.models.api.services;
         import edu.uark.uarkregisterapp.models.api.interfaces.PathElementInterface;
 
 public class EmployeeService extends BaseRemoteService {
-    public ApiResponse<Employee> getEmployee(UUID employeeId) {
+    public ApiResponse<Employee> getEmployee(UUID productId) {
         return this.readEmployeeDetailsFromResponse(
                 this.<Employee>performGetRequest(
-                        this.buildPath(employeeId)
+                        this.buildPath(productId)
+                )
+        );
+    }
+
+    public ApiResponse<Employee> getEmployeeByEmployeeID(String employeeID) {
+        return this.readEmployeeDetailsFromResponse(
+                this.<Employee>performGetRequest(
+                        this.buildPath(
+                                (new PathElementInterface[] { EmployeeApiMethod.BY_EMPLOYEE_ID })
+                                , employeeID
+                                )
                 )
         );
     }
@@ -84,13 +95,15 @@ public class EmployeeService extends BaseRemoteService {
         );
     }
 
-    public ApiResponse<Employee> loginEmployee(Employee employee) {
-    return this.readEmployeeDetailsFromResponse(
-           this.<Employee>performPostRequest(
-                   this.buildPath(),
-                   employee.convertToJson()
-           )
-    );
+    public ApiResponse<Employee> loginEmployee(JSONObject json) {
+        return this.readEmployeeDetailsFromResponse(
+               this.<Employee>performPostRequest(
+                       this.buildPath(
+                               (new PathElementInterface[]{ EmployeeApiMethod.NONE })
+                               ,"login"
+                       ),json
+               )
+        );
     }
 
     private ApiResponse<Employee> readEmployeeDetailsFromResponse(ApiResponse<Employee> apiResponse) {

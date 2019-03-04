@@ -7,6 +7,7 @@ package edu.uark.uarkregisterapp.models.api.enums;
 
 public enum EmployeeApiMethod implements PathElementInterface {
     NONE(""),
+    BY_EMPLOYEE_ID("byemployeeid"),
     BY_LAST_NAME("bylastname");
 
     @Override

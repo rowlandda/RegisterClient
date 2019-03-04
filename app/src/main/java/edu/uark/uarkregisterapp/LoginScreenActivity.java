@@ -11,16 +11,11 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import edu.uark.uarkregisterapp.models.api.ApiResponse;
 import edu.uark.uarkregisterapp.models.api.Employee;
 import edu.uark.uarkregisterapp.models.api.services.EmployeeService;
 import edu.uark.uarkregisterapp.models.transition.EmployeeTransition;
-
-//==========================================
-//  Login Page, initial view when app loads
-//==========================================
 
 public class LoginScreenActivity extends AppCompatActivity {
 
@@ -29,22 +24,18 @@ public class LoginScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_view);
 
+        this.employees = new ArrayList<>();
+
         this.employeeTransition = this.getIntent().getParcelableExtra("intent_login_employee");
     }
     private EmployeeTransition employeeTransition;
     View view;
-//==========================================
-//	Button to proceed with Login process. if
-//  successful, displays Home Screen
-//==========================================
 
     public void Login_Attempt_Task(View view) {
         this.view = view;
-        Login_Successful_Task(view);
-        //i have these two lines commented out so you can still go to home page, they should work in theory but i cant seem to get it
-        //new RetrieveEmployeesTask().execute();
 
-        //new LoginCheckTask().execute();
+        new RetrieveEmployeesTask().execute();
+        new LoginCheckTask().execute();
     }
 
     public void Login_Successful_Task(View view) {
@@ -63,14 +54,7 @@ public class LoginScreenActivity extends AppCompatActivity {
         return (EditText) this.findViewById(R.id.employee_password);
     }
 
-    private void Test() {
-
-    }
-
-    private List<Employee> employees;
-    //this.employees = new ArrayList<>();
-
-    private class RetrieveEmployeesTask extends AsyncTask<Void, Void, ApiResponse<List<Employee>>> {
+    private class RetrieveEmployeesTask extends AsyncTask<Void, ApiResponse<Employee>, ApiResponse<List<Employee>>> {
         @Override
         protected void onPreExecute() {
             this.LoggingInAlert.show();
@@ -84,8 +68,6 @@ public class LoginScreenActivity extends AppCompatActivity {
                 employees.clear();
                 employees.addAll(apiResponse.getData());
             }
-
-
 
             return apiResponse;
         }
@@ -102,27 +84,20 @@ public class LoginScreenActivity extends AppCompatActivity {
                                     R.string.button_ok,
                                     new DialogInterface.OnClickListener() {
                                         @Override
-                                        public void onClick(DialogInterface dialog, int which) {
+                                        public void onClick(DialogInterface dialog, int id) {
                                             dialog.dismiss();
                                             No_Employees_Task(view);
                                         }
                                     }
-
                             ).
                             create().
                             show();
                 }
-                else { //this has been an attempt to fix if i cant use two private classes, as i think that is the issue but am not sure
-                    Employee employee = (new Employee()).
-                            setEmployeeid(getEmployee_ID_field().getText().toString()).
-                            setPassword(getEmployee_Password_field().getText().toString());
+                else {
                     this.LoggingInAlert.dismiss();
-                   // this.startActivity(new Intent(getApplicationContext(), HomeScreen.class));
-
                 }
             }
         }
-
 
         private AlertDialog LoggingInAlert;
 
@@ -134,10 +109,6 @@ public class LoginScreenActivity extends AppCompatActivity {
     }
 
     private class LoginCheckTask extends AsyncTask<Void, Void, ApiResponse<Employee>> {
-        @Override
-        protected void onPreExecute() {
-
-        }
 
         @Override
         protected ApiResponse<Employee> doInBackground(Void... params) {
@@ -146,44 +117,43 @@ public class LoginScreenActivity extends AppCompatActivity {
                     setPassword(getEmployee_Password_field().getText().toString());
 
             ApiResponse<Employee> apiResponse = (
-                    (employee.getEmployeeid().equals(new UUID(0, 0)))
-                         ? (new EmployeeService()).loginEmployee(employee)
-                         : (new EmployeeService()).getEmployee(employee.getId())
-                    );
-
-            if(apiResponse.isValidResponse()) {
-                employeeTransition.setFname((apiResponse.getData().getFname()));
-                employeeTransition.setLname(apiResponse.getData().getLname());
-                employeeTransition.setEmployeeid(apiResponse.getData().getEmployeeid());
-                employeeTransition.setPassword(apiResponse.getData().getPassword());
-
-            }
+                          (new EmployeeService()).loginEmployee(employee.convertToLoginJson()));
 
             return apiResponse;
         }
 
         @Override
         protected  void onPostExecute(ApiResponse<Employee> apiResponse) {
-            String message;
             if (apiResponse.isValidResponse()) {
-                message = getString(R.string.alert_dialog_login_success);
-            }
-            else {
-                message = getString(R.string.alert_dialog_login_failure);
-            }
-
-            AlertDialog loginAlert = new AlertDialog.Builder(LoginScreenActivity.this).
-                    setMessage(message).create();
-
-            loginAlert.show();
-
-            if(apiResponse.isValidResponse()) {
-                loginAlert.dismiss();
+                LoginSuccessAlert.show();
+                LoginSuccessAlert.dismiss();
                 Login_Successful_Task(view);
             }
             else {
-                loginAlert.dismiss();
+               LoginFailureAlert.show();
             }
         }
+
+        private AlertDialog LoginSuccessAlert, LoginFailureAlert;
+
+        private LoginCheckTask() {
+            this.LoginSuccessAlert = new AlertDialog.Builder(LoginScreenActivity.this).
+                    setMessage(R.string.alert_dialog_login_success).
+                    create();
+
+            this.LoginFailureAlert = new AlertDialog.Builder(LoginScreenActivity.this).
+                    setMessage(R.string.alert_dialog_login_failure).
+                    setPositiveButton(
+                        R.string.button_ok,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        }
+                    ).
+                    create();
+        }
     }
+    private List<Employee> employees;
 }

@@ -157,6 +157,19 @@ public class Employee implements ConvertToJsonInterface, LoadFromJsonInterface<E
         return jsonObject;
     }
 
+    public JSONObject convertToLoginJson() {
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.put(EmployeeFieldName.EMPLOYEEID.getFieldName(), this.employeeid);
+            jsonObject.put(EmployeeFieldName.PASSWORD.getFieldName(), this.password);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
+    }
+
     //constructor with no parameters
     public Employee() {
         this.id = new UUID(0, 0);
