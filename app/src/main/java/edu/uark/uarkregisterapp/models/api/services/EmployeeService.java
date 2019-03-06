@@ -29,10 +29,10 @@ public class EmployeeService extends BaseRemoteService {
         return this.readEmployeeDetailsFromResponse(
                 this.<Employee>performGetRequest(
                         this.buildPath(
-                                (new PathElementInterface[] { EmployeeApiMethod.BY_EMPLOYEE_ID })
-                                , employeeID
-                                )
-                )
+                                (new PathElementInterface[] { EmployeeApiMethod.NONE })
+                                , "ByEmployeeIDQuery"
+                                ))
+
         );
     }
 

@@ -18,17 +18,15 @@ import edu.uark.uarkregisterapp.models.api.services.EmployeeService;
 import edu.uark.uarkregisterapp.models.transition.EmployeeTransition;
 
 public class LoginScreenActivity extends AppCompatActivity {
-
+    private EmployeeTransition employeeTransition = new EmployeeTransition();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_view);
 
         this.employees = new ArrayList<>();
-
-        this.employeeTransition = this.getIntent().getParcelableExtra("intent_login_employee");
     }
-    private EmployeeTransition employeeTransition;
+
     View view;
 
     public void Login_Attempt_Task(View view) {
@@ -58,6 +56,7 @@ public class LoginScreenActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             this.LoggingInAlert.show();
+
         }
 
         @Override
@@ -109,7 +108,6 @@ public class LoginScreenActivity extends AppCompatActivity {
     }
 
     private class LoginCheckTask extends AsyncTask<Void, Void, ApiResponse<Employee>> {
-
         @Override
         protected ApiResponse<Employee> doInBackground(Void... params) {
             Employee employee = (new Employee()).
@@ -119,15 +117,30 @@ public class LoginScreenActivity extends AppCompatActivity {
             ApiResponse<Employee> apiResponse = (
                           (new EmployeeService()).loginEmployee(employee.convertToLoginJson()));
 
+             if(apiResponse.isValidResponse()) {
+                 employeeTransition.setFname(apiResponse.getData().getFname());
+                 employeeTransition.setLname(apiResponse.getData().getLname());
+                 employeeTransition.setActive(apiResponse.getData().getActive());
+                 employeeTransition.setManager(apiResponse.getData().getManager());
+                 employeeTransition.setEmployeeid(apiResponse.getData().getEmployeeid());
+             }
+
             return apiResponse;
         }
 
         @Override
         protected  void onPostExecute(ApiResponse<Employee> apiResponse) {
             if (apiResponse.isValidResponse()) {
-                LoginSuccessAlert.show();
-                LoginSuccessAlert.dismiss();
-                Login_Successful_Task(view);
+                Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+
+                intent.putExtra(
+                        getString(R.string.intent_login_employee),
+                        employeeTransition
+                );
+
+                    LoginSuccessAlert.show();
+                    LoginSuccessAlert.dismiss();
+                    Login_Successful_Task(view);
             }
             else {
                LoginFailureAlert.show();
