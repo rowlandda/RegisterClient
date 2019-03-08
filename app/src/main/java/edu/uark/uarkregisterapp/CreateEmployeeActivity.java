@@ -11,6 +11,8 @@ import android.widget.EditText;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -22,6 +24,7 @@ import edu.uark.uarkregisterapp.models.transition.EmployeeTransition;
 public class CreateEmployeeActivity extends AppCompatActivity {
 
     private EmployeeTransition employeeTransition;
+    private ArrayList<Employee> employees = new ArrayList<>();
 
     //this is done before everything
     @Override
@@ -30,6 +33,24 @@ public class CreateEmployeeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_employee);
 
         this.employeeTransition = this.getIntent().getParcelableExtra("intent_create_employee");
+        //get list of all employees from server.
+        new RetrieveEmployeesTask().execute();
+
+    }
+
+    //get a list of all employees from server.
+    private class RetrieveEmployeesTask extends AsyncTask<Void, ApiResponse<Employee>, ApiResponse<List<Employee>>> {
+        @Override
+        protected ApiResponse<List<Employee>> doInBackground(Void... params) {
+            ApiResponse<List<Employee>> apiResponse = (new EmployeeService()).getEmployees();
+
+            if (apiResponse.isValidResponse()) {
+                employees.clear();
+                employees.addAll(apiResponse.getData());
+            }
+
+            return apiResponse;
+        }
     }
 
     //grab text from the text fields in the view
@@ -110,6 +131,7 @@ public class CreateEmployeeActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... params) {
             Employee employee = (new Employee()).
+                    setEmployeeid(Integer.toString(employees.size())).
                     setFname(getEmployeeFNameEditText().getText().toString()).
                     setLname(getEmployeeLNameEditText().getText().toString()).
                     setPassword(getEmployeePasswordEditText().getText().toString());
@@ -125,6 +147,7 @@ public class CreateEmployeeActivity extends AppCompatActivity {
             //if successful then make an employeeTransition object to pass to the next
             //view
             if (apiResponse.isValidResponse()) {
+                employeeTransition.setEmployeeid(apiResponse.getData().getEmployeeid());
                 employeeTransition.setFname(apiResponse.getData().getFname());
                 employeeTransition.setLname(apiResponse.getData().getLname());
                 employeeTransition.setPassword(apiResponse.getData().getPassword());
@@ -160,6 +183,8 @@ public class CreateEmployeeActivity extends AppCompatActivity {
                     ).
                     create().
                     show();
+            //refresh employee list
+            new RetrieveEmployeesTask().execute();
         }
 
         private AlertDialog savingEmployeeAlert;
