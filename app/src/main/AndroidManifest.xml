@@ -10,11 +10,13 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomeScreen"></activity>
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        <activity android:name=".TopBarTest"></activity>
+        <activity android:name=".HomeScreen" />
         <activity android:name=".CreateEmployeeActivity" />
         <activity
             android:name=".LandingActivity"
-            android:parentActivityName=".LoginScreenActivity"></activity>
+            android:parentActivityName=".LoginScreenActivity" />
         <activity
             android:name=".ProductsListingActivity"
             android:label="@string/title_activity_products_listing"
