@@ -12,6 +12,7 @@
     <string name="text_view_landing_welcome">UARK Register App</string>
     <string name="text_view_products_lookup_code">LookupCode</string>
     <string name="text_view_products_count">0</string>
+    <string name="text_view_products_cost">0</string>
     <string name="text_view_products_created_on">01/01/1970</string>
     <string name="text_view_label_products_lookup_code">Lookup Code:</string>
     <string name="text_view_label_products_count">Count:</string>

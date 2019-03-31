@@ -53,6 +53,16 @@ public class Product implements ConvertToJsonInterface, LoadFromJsonInterface<Pr
 		return this;
 	}
 
+	//==================================================
+	//===Cost Getter and Setter
+	//==================================================
+	private int cost;
+	public int getCost() { return this.cost;}
+	public Product setCost(int cost) {
+		this.cost = cost;
+		return this;
+	}
+
 	private Date createdOn;
 	//==================================================
 	//===CreatedOn Getter and Setter
