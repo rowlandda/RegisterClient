@@ -183,6 +183,8 @@ public class CreateEmployeeActivity extends AppCompatActivity {
                     ).
                     create().
                     show();
+            //todo
+            //go back to transaction page.  this comment is my week one commit(David)
             //refresh employee list
             new RetrieveEmployeesTask().execute();
         }
