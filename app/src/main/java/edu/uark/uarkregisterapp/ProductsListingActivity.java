@@ -19,9 +19,12 @@ import edu.uark.uarkregisterapp.adapters.ProductListAdapter;
 import edu.uark.uarkregisterapp.models.api.ApiResponse;
 import edu.uark.uarkregisterapp.models.api.Product;
 import edu.uark.uarkregisterapp.models.api.services.ProductService;
+import edu.uark.uarkregisterapp.models.transition.EmployeeTransition;
 import edu.uark.uarkregisterapp.models.transition.ProductTransition;
 
 public class ProductsListingActivity extends AppCompatActivity {
+    EmployeeTransition currentEmployeeTransition;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -35,6 +38,7 @@ public class ProductsListingActivity extends AppCompatActivity {
 
 		this.products = new ArrayList<>();
 		this.productListAdapter = new ProductListAdapter(this, this.products);
+		this.currentEmployeeTransition = this.getIntent().getParcelableExtra("current_employee");
 
 		this.getProductsListView().setAdapter(this.productListAdapter);
 		this.getProductsListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -45,6 +49,10 @@ public class ProductsListingActivity extends AppCompatActivity {
 				intent.putExtra(
 					getString(R.string.intent_extra_product),
 					new ProductTransition((Product) getProductsListView().getItemAtPosition(position))
+				);
+				intent.putExtra(
+						getString(R.string.current_employee),
+                        currentEmployeeTransition
 				);
 
 				startActivity(intent);

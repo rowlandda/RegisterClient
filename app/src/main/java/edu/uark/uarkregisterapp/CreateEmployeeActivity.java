@@ -1,7 +1,6 @@
 package edu.uark.uarkregisterapp;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +12,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 
 import edu.uark.uarkregisterapp.models.api.ApiResponse;
@@ -23,7 +21,8 @@ import edu.uark.uarkregisterapp.models.transition.EmployeeTransition;
 
 public class CreateEmployeeActivity extends AppCompatActivity {
 
-    private EmployeeTransition employeeTransition;
+    private EmployeeTransition createdEmployeeTransition;
+    private EmployeeTransition currentEmployeeTransition;
     private ArrayList<Employee> employees = new ArrayList<>();
 
     //this is done before everything
@@ -32,7 +31,8 @@ public class CreateEmployeeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_employee);
 
-        this.employeeTransition = this.getIntent().getParcelableExtra("intent_create_employee");
+        this.currentEmployeeTransition = this.getIntent().getParcelableExtra("current_employee");
+        this.createdEmployeeTransition = new EmployeeTransition();
         //get list of all employees from server.
         new RetrieveEmployeesTask().execute();
 
@@ -107,9 +107,9 @@ public class CreateEmployeeActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        this.getEmployeeFNameEditText().setText(this.employeeTransition.getFname());
-        this.getEmployeeLNameEditText().setText(this.employeeTransition.getLname());
-        this.getEmployeePasswordEditText().setText(this.employeeTransition.getPassword());
+        this.getEmployeeFNameEditText().setText(this.createdEmployeeTransition.getFname());
+        this.getEmployeeLNameEditText().setText(this.createdEmployeeTransition.getLname());
+        this.getEmployeePasswordEditText().setText(this.createdEmployeeTransition.getPassword());
     }
 
     public void createEmployeeOnClick(View view) {
@@ -147,10 +147,10 @@ public class CreateEmployeeActivity extends AppCompatActivity {
             //if successful then make an employeeTransition object to pass to the next
             //view
             if (apiResponse.isValidResponse()) {
-                employeeTransition.setEmployeeid(apiResponse.getData().getEmployeeid());
-                employeeTransition.setFname(apiResponse.getData().getFname());
-                employeeTransition.setLname(apiResponse.getData().getLname());
-                employeeTransition.setPassword(apiResponse.getData().getPassword());
+                createdEmployeeTransition.setEmployeeid(apiResponse.getData().getEmployeeid());
+                createdEmployeeTransition.setFname(apiResponse.getData().getFname());
+                createdEmployeeTransition.setLname(apiResponse.getData().getLname());
+                createdEmployeeTransition.setPassword(apiResponse.getData().getPassword());
             }
 
             return apiResponse.isValidResponse();

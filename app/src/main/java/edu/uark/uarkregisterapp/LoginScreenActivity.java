@@ -37,7 +37,12 @@ public class LoginScreenActivity extends AppCompatActivity {
     }
 
     public void Login_Successful_Task(View view) {
-        this.startActivity(new Intent(getApplicationContext(), HomeScreen.class));
+        Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+        intent.putExtra(
+                "current_user",
+                this.employeeTransition
+        );
+        this.startActivity(intent);
     }
 
     public void No_Employees_Task(View view) {

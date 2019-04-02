@@ -59,5 +59,6 @@
     <string name="alert_dialog_login_failure">ID or Password is incorrect.</string>
     <string name="intent_login_employee">intent_login_employee</string>
     <string name="employee_active">active</string>
+    <string name="current_employee">\"current_employee\"</string>
 
 </resources>

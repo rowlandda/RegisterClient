@@ -21,6 +21,7 @@ import java.util.UUID;
 import edu.uark.uarkregisterapp.models.api.ApiResponse;
 import edu.uark.uarkregisterapp.models.api.Product;
 import edu.uark.uarkregisterapp.models.api.services.ProductService;
+import edu.uark.uarkregisterapp.models.transition.EmployeeTransition;
 import edu.uark.uarkregisterapp.models.transition.ProductTransition;
 
 public class ProductViewActivity extends AppCompatActivity {
@@ -36,6 +37,7 @@ public class ProductViewActivity extends AppCompatActivity {
 		}
 
 		this.productTransition = this.getIntent().getParcelableExtra(this.getString(R.string.intent_extra_product));
+		this.currentEmployeeTransition = this.getIntent().getParcelableExtra("current_employee");
 	}
 
 	@Override
@@ -269,4 +271,5 @@ public class ProductViewActivity extends AppCompatActivity {
 	}
 
 	private ProductTransition productTransition;
+	private EmployeeTransition currentEmployeeTransition;
 }
