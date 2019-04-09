@@ -105,6 +105,8 @@ public class ProductsListingActivity extends AppCompatActivity {
 
 			if (apiResponse.isValidResponse()) {
 				allProducts.clear();
+				searchedProducts.clear();
+				searchedProducts.addAll(apiResponse.getData());
 				allProducts.addAll(apiResponse.getData());
 			}
 
