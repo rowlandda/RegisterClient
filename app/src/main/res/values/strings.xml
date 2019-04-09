@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">UARKRegisterApp</string>
+    <string name="app_name">Fort Kickass</string>
     <string name="title_activity_products_listing">Products</string>
     <string name="title_activity_product_view">ProductViewActivity</string>
     <string name="button_ok">OK</string>
@@ -9,7 +9,7 @@
     <string name="button_dismiss">Dismiss</string>
     <string name="button_all_products">Show All Products</string>
     <string name="button_create_product">Create Product</string>
-    <string name="text_view_landing_welcome">UARK Register App</string>
+    <string name="text_view_landing_welcome">Fort Kickass</string>
     <string name="text_view_products_lookup_code">LookupCode</string>
     <string name="text_view_products_count">0</string>
     <string name="text_view_products_cost">0</string>
@@ -60,5 +60,9 @@
     <string name="intent_login_employee">intent_login_employee</string>
     <string name="employee_active">active</string>
     <string name="current_employee">\"current_employee\"</string>
+    <string name="menu_item1">Fruit</string>
+    <string name="menu_item2">Protein</string>
+    <string name="menu_item3">Gear</string>
+    <string name="menu_item4">Gift Card</string>
 
 </resources>
