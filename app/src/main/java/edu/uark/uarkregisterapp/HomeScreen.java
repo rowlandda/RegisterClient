@@ -25,7 +25,7 @@ public class HomeScreen extends AppCompatActivity {
         setContentView(R.layout.activity_home_screen);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        this.currentEmployeeTransition = this.getIntent().getParcelableExtra("intent_create_employee");
+        this.currentEmployeeTransition = this.getIntent().getParcelableExtra("current_user");
     }
 
     //===========================================================

@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -23,7 +24,12 @@ import edu.uark.uarkregisterapp.models.transition.EmployeeTransition;
 import edu.uark.uarkregisterapp.models.transition.ProductTransition;
 
 public class ProductsListingActivity extends AppCompatActivity {
-    EmployeeTransition currentEmployeeTransition;
+    private EmployeeTransition currentEmployeeTransition;
+    private String search_string = "";
+	private List<Product> searchedProducts;
+	private List<Product> allProducts;
+	private ProductListAdapter productListAdapter;
+	private ProductListAdapter searchedProductsListAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +42,9 @@ public class ProductsListingActivity extends AppCompatActivity {
 			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		}
 
-		this.products = new ArrayList<>();
-		this.productListAdapter = new ProductListAdapter(this, this.products);
+		this.allProducts = new ArrayList<>();
+		this.searchedProducts = new ArrayList<>();
+		this.productListAdapter = new ProductListAdapter(this, this.searchedProducts);
 		this.currentEmployeeTransition = this.getIntent().getParcelableExtra("current_employee");
 
 		this.getProductsListView().setAdapter(this.productListAdapter);
@@ -71,6 +78,21 @@ public class ProductsListingActivity extends AppCompatActivity {
 		return (ListView) this.findViewById(R.id.list_view_products);
 	}
 
+	private EditText getSearchString() {
+		return (EditText) this.findViewById(R.id.search_product_field);
+	}
+
+	public void searchProducts(View view) {
+		search_string = getSearchString().getText().toString();
+		searchedProducts.clear();
+		for (Product product : allProducts) {
+			if (product.getLookupCode().contains(search_string)) {
+				searchedProducts.add(product);
+			}
+		}
+		productListAdapter.notifyDataSetChanged();
+	}
+
 	private class RetrieveProductsTask extends AsyncTask<Void, Void, ApiResponse<List<Product>>> {
 		@Override
 		protected void onPreExecute() {
@@ -82,8 +104,8 @@ public class ProductsListingActivity extends AppCompatActivity {
 			ApiResponse<List<Product>> apiResponse = (new ProductService()).getProducts();
 
 			if (apiResponse.isValidResponse()) {
-				products.clear();
-				products.addAll(apiResponse.getData());
+				allProducts.clear();
+				allProducts.addAll(apiResponse.getData());
 			}
 
 			return apiResponse;
@@ -122,6 +144,4 @@ public class ProductsListingActivity extends AppCompatActivity {
 		}
 	}
 
-	private List<Product> products;
-	private ProductListAdapter productListAdapter;
 }
