@@ -30,6 +30,7 @@ public class ProductsListingActivity extends AppCompatActivity {
 	private List<Product> allProducts;
 	private ProductListAdapter productListAdapter;
 	private ProductListAdapter searchedProductsListAdapter;
+	private List<Product> cartProducts;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class ProductsListingActivity extends AppCompatActivity {
 
 		this.allProducts = new ArrayList<>();
 		this.searchedProducts = new ArrayList<>();
+		this.cartProducts = new ArrayList<>();
 		this.productListAdapter = new ProductListAdapter(this, this.searchedProducts);
 		this.currentEmployeeTransition = this.getIntent().getParcelableExtra("current_employee");
 
@@ -93,6 +95,14 @@ public class ProductsListingActivity extends AppCompatActivity {
 		productListAdapter.notifyDataSetChanged();
 	}
 
+	public void addProductTask() {
+		Product product = new Product();
+
+		//need to figure out how to pull id/name from product list
+		//product.setId(this.productListAdapter.getView);
+		cartProducts.add(product);
+	}
+
 	private class RetrieveProductsTask extends AsyncTask<Void, Void, ApiResponse<List<Product>>> {
 		@Override
 		protected void onPreExecute() {
@@ -123,17 +133,17 @@ public class ProductsListingActivity extends AppCompatActivity {
 
 			if (!apiResponse.isValidResponse()) {
 				new AlertDialog.Builder(ProductsListingActivity.this).
-					setMessage(R.string.alert_dialog_products_load_failure).
-					setPositiveButton(
-						R.string.button_dismiss,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-								dialog.dismiss();
-							}
-						}
-					).
-					create().
-					show();
+						setMessage(R.string.alert_dialog_products_load_failure).
+						setPositiveButton(
+								R.string.button_dismiss,
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog, int id) {
+										dialog.dismiss();
+									}
+								}
+						).
+						create().
+						show();
 			}
 		}
 
@@ -141,9 +151,8 @@ public class ProductsListingActivity extends AppCompatActivity {
 
 		private RetrieveProductsTask() {
 			this.loadingProductsAlert = new AlertDialog.Builder(ProductsListingActivity.this).
-				setMessage(R.string.alert_dialog_products_loading).
-				create();
+					setMessage(R.string.alert_dialog_products_loading).
+					create();
 		}
 	}
-
 }

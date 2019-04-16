@@ -66,5 +66,6 @@
     <string name="menu_item4">Gift Card</string>
     <string name="product_name">Lookup Code</string>
     <string name="search">Search</string>
+    <string name="add_to_cart">Add to Cart</string>
 
 </resources>
