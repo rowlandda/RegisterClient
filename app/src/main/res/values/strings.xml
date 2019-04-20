@@ -67,5 +67,7 @@
     <string name="product_name">Lookup Code</string>
     <string name="search">Search</string>
     <string name="add_to_cart">Add to Cart</string>
+    <string name="checkout">CHECKOUT</string>
+    <string name="clear">CLEAR</string>
 
 </resources>
