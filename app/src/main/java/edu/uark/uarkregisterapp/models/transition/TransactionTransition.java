@@ -34,8 +34,8 @@ public class TransactionTransition implements Parcelable {
         return this;
     }
 
-    private ArrayList<Product> shoppingCart;
-    public ArrayList<Product> getShoppingCart() {
+    private ArrayList<ProductTransition> shoppingCart;
+    public ArrayList<ProductTransition> getShoppingCart() {
         return this.shoppingCart;
     }
 
@@ -43,7 +43,7 @@ public class TransactionTransition implements Parcelable {
     public void writeToParcel(Parcel destination, int flags) {
         destination.writeByteArray((new UUIDToByteConverterCommand()).setValueToConvert(this.id).execute());
         destination.writeLong(this.createdOn.getTime());
-        destination.writeArray(this.shoppingCart.toArray());
+        destination.writeTypedList(this.shoppingCart);
     }
 
     @Override
@@ -70,7 +70,11 @@ public class TransactionTransition implements Parcelable {
     public TransactionTransition(Transaction transaction) {
         this.id = transaction.getId();
         this.createdOn = transaction.getCreatedOn();
-        this.shoppingCart = transaction.getShoppingCart();
+        this.shoppingCart = new ArrayList<>();
+        for (int i = 0; i < transaction.getShoppingCart().size(); i++){
+            ProductTransition p = new ProductTransition(transaction.getShoppingCart().get(i));
+            this.shoppingCart.add(p);
+        }
     }
 
     private TransactionTransition(Parcel transactionTransitionParcel) {

@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -19,9 +20,11 @@ import java.util.List;
 import edu.uark.uarkregisterapp.adapters.ProductListAdapter;
 import edu.uark.uarkregisterapp.models.api.ApiResponse;
 import edu.uark.uarkregisterapp.models.api.Product;
+import edu.uark.uarkregisterapp.models.api.Transaction;
 import edu.uark.uarkregisterapp.models.api.services.ProductService;
 import edu.uark.uarkregisterapp.models.transition.EmployeeTransition;
 import edu.uark.uarkregisterapp.models.transition.ProductTransition;
+import edu.uark.uarkregisterapp.models.transition.TransactionTransition;
 
 public class ProductsListingActivity extends AppCompatActivity {
     private EmployeeTransition currentEmployeeTransition;
@@ -30,7 +33,7 @@ public class ProductsListingActivity extends AppCompatActivity {
 	private List<Product> allProducts;
 	private ProductListAdapter productListAdapter;
 	private ProductListAdapter searchedProductsListAdapter;
-	private List<Product> cartProducts;
+	private ArrayList<ProductTransition> cartProducts;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -96,18 +99,28 @@ public class ProductsListingActivity extends AppCompatActivity {
 	}
 
 	public void addProductTask(View view) {
+		Product p = new Product();
+		//finds the index of the product whos add to cart button we clicked
+	    int position = getProductsListView().getPositionForView((LinearLayout)view.getParent());
+	    if (position >= 0) {
+	    	p = this.productListAdapter.getItem(position);
+		}
+		cartProducts.add(new ProductTransition(p));
+	}
+
+	public void viewCart(View view) {
 		Intent intent = new Intent(getApplicationContext(), ShoppingCartActivity.class);
 		intent.putExtra(
 				"current_employee",
 				currentEmployeeTransition
 		);
+		intent.putParcelableArrayListExtra(
+				"current_transaction",
+				cartProducts
+		);
 		this.startActivity(intent);
-//		Product product = new Product();
-//
-//		//need to figure out how to pull id/name from product list
-//		//product.setId(this.productListAdapter.getView);
-//		cartProducts.add(product);
 	}
+
 
 	private class RetrieveProductsTask extends AsyncTask<Void, Void, ApiResponse<List<Product>>> {
 		@Override

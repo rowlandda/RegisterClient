@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -26,6 +25,7 @@ import edu.uark.uarkregisterapp.models.transition.ProductTransition;
 public class ShoppingCartActivity extends AppCompatActivity {
     private EmployeeTransition currentEmployeeTransition;
     private ProductListAdapter productListAdapter;
+    private List<ProductTransition> cartTransition;
     private List<Product> cartProducts;
 
     @Override
@@ -39,7 +39,13 @@ public class ShoppingCartActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        this.cartTransition = this.getIntent().getParcelableArrayListExtra("current_transaction");
         this.cartProducts = new ArrayList<>();
+        //convert product transition object to actual products
+        for (int i = 0; i < cartTransition.size(); i++) {
+            Product p = new Product(cartTransition.get(i));
+            cartProducts.add(p);
+        }
         this.productListAdapter = new ProductListAdapter(this, this.cartProducts);
         this.currentEmployeeTransition = this.getIntent().getParcelableExtra("current_employee");
         this.getProductsListView().setAdapter(this.productListAdapter);
@@ -59,7 +65,11 @@ public class ShoppingCartActivity extends AppCompatActivity {
     public void checkout(View view) {
     }
 
+    //todo clearing of items is superficial.  need to make it permanent.  I think once we start
+    //pulling the data from the database this will be easier
     public void clearCart(View view) {
+        this.cartProducts.clear();
+        this.productListAdapter.notifyDataSetChanged();
     }
 
     private class RetrieveProductsTask extends AsyncTask<Void, Void, ApiResponse<List<Product>>> {
@@ -71,10 +81,11 @@ public class ShoppingCartActivity extends AppCompatActivity {
         @Override
         protected ApiResponse<List<Product>> doInBackground(Void... params) {
             ApiResponse<List<Product>> apiResponse = (new ProductService()).getProducts();
+            //todo read from transaction table instead of internal
 
             if (apiResponse.isValidResponse()) {
-                cartProducts.clear();
-                cartProducts.addAll(apiResponse.getData());
+//                cartProducts.clear();
+//                cartProducts.addAll(apiResponse.getData());
             }
 
             return apiResponse;

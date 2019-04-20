@@ -10,6 +10,7 @@ package edu.uark.uarkregisterapp.models.api;
         import java.text.SimpleDateFormat;
         import java.util.ArrayList;
         import java.util.Date;
+        import java.util.List;
         import java.util.Locale;
         import java.util.UUID;
 
@@ -17,7 +18,7 @@ package edu.uark.uarkregisterapp.models.api;
         import edu.uark.uarkregisterapp.models.api.interfaces.ConvertToJsonInterface;
         import edu.uark.uarkregisterapp.models.api.interfaces.LoadFromJsonInterface;
         import edu.uark.uarkregisterapp.models.transition.TransactionTransition;
-
+//todo trouble with serializing
 public class Transaction implements ConvertToJsonInterface, LoadFromJsonInterface<Transaction> {
 
     private UUID id;
@@ -136,9 +137,22 @@ public class Transaction implements ConvertToJsonInterface, LoadFromJsonInterfac
         this.shoppingCart = new ArrayList<>();
     }
 
+    public Transaction(List<Product> productList){
+        this.id = new UUID(0,0);
+        this.createdOn = new Date();
+        this.shoppingCart = new ArrayList<>();
+        for (int i = 0; i < productList.size(); i++) {
+            this.shoppingCart.add(productList.get(i));
+        }
+    }
+
     public Transaction(TransactionTransition transactionTransition) {
         this.id = transactionTransition.getId();
         this.createdOn = transactionTransition.getCreatedOn();
-        this.shoppingCart = transactionTransition.getShoppingCart();
+        this.shoppingCart = new ArrayList<>();
+        for (int i = 0; i < transactionTransition.getShoppingCart().size(); i++){
+            Product p = new Product(transactionTransition.getShoppingCart().get(i));
+            this.shoppingCart.add(p);
+        }
     }
 }

@@ -70,5 +70,6 @@
     <string name="checkout">CHECKOUT</string>
     <string name="clear">CLEAR</string>
     <string name="shopping_cart_welcome">Shopping Cart</string>
+    <string name="view_cart">VIEW CART</string>
 
 </resources>
