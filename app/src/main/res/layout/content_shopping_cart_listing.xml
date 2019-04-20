@@ -29,19 +29,20 @@ tools:showIn="@layout/activity_shopping_cart">
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
 
-<ListView
-    android:id="@+id/list_view_shopping_cart"
-    android:layout_below="@+id/shopping_cart_title"
-    android:layout_width="393dp"
-    android:layout_height="384dp"
-    android:layout_alignParentStart="true"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentEnd="true"
-    android:layout_alignParentRight="true"
-    android:layout_marginStart="16dp"
-    android:layout_marginLeft="16dp"
-    android:layout_marginEnd="17dp"
-    android:layout_marginRight="17dp" />
+    <ListView
+        android:id="@+id/list_view_shopping_cart"
+        android:layout_width="360dp"
+        android:layout_height="362dp"
+        android:layout_below="@+id/shopping_cart_title"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp" />
 
 <Button
     android:id="@+id/checkout"
@@ -50,6 +51,7 @@ tools:showIn="@layout/activity_shopping_cart">
     android:layout_below="@+id/list_view_shopping_cart"
     android:layout_alignParentEnd="true"
     android:layout_marginEnd="30dp"
+    android:layout_marginTop="20dp"
     android:onClick="checkout"
     android:text="@string/checkout"
     app:layout_constraintStart_toStartOf="parent"
@@ -65,6 +67,7 @@ tools:showIn="@layout/activity_shopping_cart">
     android:onClick="clearCart"
     android:paddingStart="5dp"
     android:paddingEnd="5dp"
+    android:layout_marginTop="20dp"
     android:text="@string/clear"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/list_view_shopping_cart" />
