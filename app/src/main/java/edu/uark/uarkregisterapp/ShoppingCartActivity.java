@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -25,7 +26,7 @@ import edu.uark.uarkregisterapp.models.transition.ProductTransition;
 public class ShoppingCartActivity extends AppCompatActivity {
     private EmployeeTransition currentEmployeeTransition;
     private ProductListAdapter productListAdapter;
-    private List<ProductTransition> cartTransition;
+    private List<ProductTransition> cartTransition; //contains the contents of the cart
     private List<Product> cartProducts;
 
     @Override
@@ -65,11 +66,23 @@ public class ShoppingCartActivity extends AppCompatActivity {
     public void checkout(View view) {
     }
 
-    //todo clearing of items is superficial.  need to make it permanent.  I think once we start
-    //pulling the data from the database this will be easier
     public void clearCart(View view) {
+        this.cartTransition.clear();
         this.cartProducts.clear();
         this.productListAdapter.notifyDataSetChanged();
+    }
+
+    public void keepShopping(View view) {
+        Intent intent = new Intent(getApplicationContext(), ProductsListingActivity.class);
+        intent.putParcelableArrayListExtra(
+                "shopping_list",
+                (ArrayList<? extends Parcelable>) this.cartTransition
+        );
+        intent.putExtra(
+                "current_employee",
+                this.currentEmployeeTransition
+        );
+        this.startActivity(intent);
     }
 
     private class RetrieveProductsTask extends AsyncTask<Void, Void, ApiResponse<List<Product>>> {

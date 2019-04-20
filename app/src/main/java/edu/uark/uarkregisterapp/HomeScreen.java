@@ -12,7 +12,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import edu.uark.uarkregisterapp.models.transition.EmployeeTransition;
+import edu.uark.uarkregisterapp.models.transition.ProductTransition;
 
 public class HomeScreen extends AppCompatActivity {
 
@@ -63,6 +66,10 @@ public class HomeScreen extends AppCompatActivity {
 
     public void startTransactionOnClick(View view) {
         Intent intent = new Intent(getApplicationContext(), ProductsListingActivity.class);
+        intent.putParcelableArrayListExtra(
+                "shopping_list",
+                new ArrayList<ProductTransition>()
+        );
         intent.putExtra(
                 "current_employee",
                 this.currentEmployeeTransition

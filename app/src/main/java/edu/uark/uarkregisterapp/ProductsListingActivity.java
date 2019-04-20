@@ -32,8 +32,7 @@ public class ProductsListingActivity extends AppCompatActivity {
 	private List<Product> searchedProducts;
 	private List<Product> allProducts;
 	private ProductListAdapter productListAdapter;
-	private ProductListAdapter searchedProductsListAdapter;
-	private ArrayList<ProductTransition> cartProducts;
+	private ArrayList<ProductTransition> cartProducts;  //contains the contents of the cart
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +47,7 @@ public class ProductsListingActivity extends AppCompatActivity {
 
 		this.allProducts = new ArrayList<>();
 		this.searchedProducts = new ArrayList<>();
-		this.cartProducts = new ArrayList<>();
+		this.cartProducts = this.getIntent().getParcelableArrayListExtra("shopping_list");
 		this.productListAdapter = new ProductListAdapter(this, this.searchedProducts);
 		this.currentEmployeeTransition = this.getIntent().getParcelableExtra("current_employee");
 
@@ -75,7 +74,7 @@ public class ProductsListingActivity extends AppCompatActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-
+		this.cartProducts = this.getIntent().getParcelableArrayListExtra("shopping_list");
 		(new RetrieveProductsTask()).execute();
 	}
 
