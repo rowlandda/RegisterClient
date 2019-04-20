@@ -39,7 +39,7 @@ public class LoginScreenActivity extends AppCompatActivity {
     public void Login_Successful_Task(View view) {
         Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
         intent.putExtra(
-                "current_user",
+                "current_employee",
                 this.employeeTransition
         );
         this.startActivity(intent);
@@ -139,7 +139,7 @@ public class LoginScreenActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
 
                 intent.putExtra(
-                        getString(R.string.intent_login_employee),
+                        getString(R.string.current_employee),
                         employeeTransition
                 );
 

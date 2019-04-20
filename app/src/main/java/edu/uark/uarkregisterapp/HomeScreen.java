@@ -25,7 +25,7 @@ public class HomeScreen extends AppCompatActivity {
         setContentView(R.layout.activity_home_screen);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        this.currentEmployeeTransition = this.getIntent().getParcelableExtra("current_user");
+        this.currentEmployeeTransition = this.getIntent().getParcelableExtra("current_employee");
     }
 
     //===========================================================
@@ -64,7 +64,7 @@ public class HomeScreen extends AppCompatActivity {
     public void startTransactionOnClick(View view) {
         Intent intent = new Intent(getApplicationContext(), ProductsListingActivity.class);
         intent.putExtra(
-                "current_user",
+                "current_employee",
                 this.currentEmployeeTransition
         );
         this.startActivity(intent);

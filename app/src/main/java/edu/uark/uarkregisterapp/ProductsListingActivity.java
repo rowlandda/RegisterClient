@@ -95,12 +95,18 @@ public class ProductsListingActivity extends AppCompatActivity {
 		productListAdapter.notifyDataSetChanged();
 	}
 
-	public void addProductTask() {
-		Product product = new Product();
-
-		//need to figure out how to pull id/name from product list
-		//product.setId(this.productListAdapter.getView);
-		cartProducts.add(product);
+	public void addProductTask(View view) {
+		Intent intent = new Intent(getApplicationContext(), ShoppingCartActivity.class);
+		intent.putExtra(
+				"current_employee",
+				currentEmployeeTransition
+		);
+		this.startActivity(intent);
+//		Product product = new Product();
+//
+//		//need to figure out how to pull id/name from product list
+//		//product.setId(this.productListAdapter.getView);
+//		cartProducts.add(product);
 	}
 
 	private class RetrieveProductsTask extends AsyncTask<Void, Void, ApiResponse<List<Product>>> {

@@ -59,7 +59,7 @@
     <string name="alert_dialog_login_failure">ID or Password is incorrect.</string>
     <string name="intent_login_employee">intent_login_employee</string>
     <string name="employee_active">active</string>
-    <string name="current_employee">\"current_employee\"</string>
+    <string name="current_employee">current_employee</string>
     <string name="menu_item1">Fruit</string>
     <string name="menu_item2">Protein</string>
     <string name="menu_item3">Gear</string>
@@ -69,5 +69,6 @@
     <string name="add_to_cart">Add to Cart</string>
     <string name="checkout">CHECKOUT</string>
     <string name="clear">CLEAR</string>
+    <string name="shopping_cart_welcome">Shopping Cart</string>
 
 </resources>
