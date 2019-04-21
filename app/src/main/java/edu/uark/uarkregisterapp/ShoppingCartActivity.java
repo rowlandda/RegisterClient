@@ -73,13 +73,6 @@ public class ShoppingCartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_cart);
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-
-        ActionBar actionBar = this.getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-
         this.cartTransition = this.getIntent().getParcelableArrayListExtra("current_transaction");
         this.cartProducts = new ArrayList<>();
         //convert product transition object to actual products
