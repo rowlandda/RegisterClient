@@ -2,6 +2,8 @@ package edu.uark.uarkregisterapp;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,8 +28,6 @@ public class HomeScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         this.currentEmployeeTransition = this.getIntent().getParcelableExtra("current_employee");
     }
 
@@ -44,6 +44,9 @@ public class HomeScreen extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.home:
+                this.startActivity(new Intent(getApplicationContext(), HomeScreen.class));
+                return true;
             case R.id.item1:
                 Toast.makeText(this, "Fruit selected", Toast.LENGTH_SHORT).show();
                 return true;
@@ -60,7 +63,6 @@ public class HomeScreen extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
     //End Menu
     //===========================================================
 

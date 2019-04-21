@@ -72,5 +72,6 @@
     <string name="shopping_cart_welcome">Shopping Cart</string>
     <string name="view_cart">VIEW CART</string>
     <string name="keep_shopping">KEEP SHOPPING</string>
+    <string name="home_icon">Home</string>
 
 </resources>

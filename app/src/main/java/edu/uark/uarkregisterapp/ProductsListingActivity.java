@@ -8,11 +8,15 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +37,41 @@ public class ProductsListingActivity extends AppCompatActivity {
 	private List<Product> allProducts;
 	private ProductListAdapter productListAdapter;
 	private ArrayList<ProductTransition> cartProducts;  //contains the contents of the cart
+
+	//===========================================================
+	//Adds Menu at the top
+	//===========================================================
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.top_menu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.home:
+				this.startActivity(new Intent(getApplicationContext(), HomeScreen.class));
+				return true;
+			case R.id.item1:
+				Toast.makeText(this, "Fruit selected", Toast.LENGTH_SHORT).show();
+				return true;
+			case R.id.item2:
+				Toast.makeText(this, "Protein selected", Toast.LENGTH_SHORT).show();
+				return true;
+			case R.id.item3:
+				Toast.makeText(this, "Gear selected", Toast.LENGTH_SHORT).show();
+				return true;
+			case R.id.item4:
+				Toast.makeText(this, "Gift Card selected", Toast.LENGTH_SHORT).show();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
+	//End Menu
+	//===========================================================
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +138,7 @@ public class ProductsListingActivity extends AppCompatActivity {
 
 	public void addProductTask(View view) {
 		Product p = new Product();
-		//finds the index of the product whos add to cart button we clicked
+		//finds the index of the product whose add to cart button we clicked
 	    int position = getProductsListView().getPositionForView((LinearLayout)view.getParent());
 	    if (position >= 0) {
 	    	p = this.productListAdapter.getItem(position);

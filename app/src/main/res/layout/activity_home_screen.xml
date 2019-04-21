@@ -7,10 +7,6 @@
     android:layout_height="match_parent"
     tools:context="edu.uark.uarkregisterapp.LandingActivity">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
-
     <TextView
         android:id="@+id/welcome_message_HomeScreen"
         android:layout_width="253dp"
