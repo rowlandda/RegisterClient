@@ -178,22 +178,32 @@ public class CreateEmployeeActivity extends AppCompatActivity {
 
             //build the string to send to server.  if uuid is 0's then make new
             //if not then update the the employee tuple
-            ApiResponse<Employee> apiResponse = (
-                    (employee.getId().equals(new UUID(0, 0)))
-                            ? (new EmployeeService()).createEmployee(employee)
-                            : (new EmployeeService()).updateEmployee(employee)
-            );
+            //todo
+            //get rid of this try catch block once we fix api
+            try {
+                ApiResponse<Employee> apiResponse = (
+                        (employee.getId().equals(new UUID(0, 0)))
+                                ? (new EmployeeService()).createEmployee(employee)
+                                : (new EmployeeService()).updateEmployee(employee)
+                );
 
-            //if successful then make an employeeTransition object to pass to the next
-            //view
-            if (apiResponse.isValidResponse()) {
-                createdEmployeeTransition.setEmployeeid(apiResponse.getData().getEmployeeid());
-                createdEmployeeTransition.setFname(apiResponse.getData().getFname());
-                createdEmployeeTransition.setLname(apiResponse.getData().getLname());
-                createdEmployeeTransition.setPassword(apiResponse.getData().getPassword());
+                //if successful then make an employeeTransition object to pass to the next
+                //view
+                if (apiResponse.isValidResponse()) {
+                    createdEmployeeTransition.setEmployeeid(apiResponse.getData().getEmployeeid());
+                    createdEmployeeTransition.setFname(apiResponse.getData().getFname());
+                    createdEmployeeTransition.setLname(apiResponse.getData().getLname());
+                    createdEmployeeTransition.setPassword(apiResponse.getData().getPassword());
+                }
+
+                return apiResponse.isValidResponse();
             }
-
-            return apiResponse.isValidResponse();
+            catch (Exception e)
+            {
+                this.savingEmployeeAlert.dismiss();
+                e.printStackTrace();
+                return false;
+            }
         }
 
         //alert notification information
