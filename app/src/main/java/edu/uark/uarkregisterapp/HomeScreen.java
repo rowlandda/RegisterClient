@@ -48,7 +48,11 @@ public class HomeScreen extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.home:
-                this.startActivity(new Intent(getApplicationContext(), HomeScreen.class));
+                Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                intent.putExtra("current_employee",
+                        this.currentEmployeeTransition
+                );
+                this.startActivity(intent);
                 return true;
             case R.id.item1:
                 Toast.makeText(this, "Fruit selected", Toast.LENGTH_SHORT).show();
