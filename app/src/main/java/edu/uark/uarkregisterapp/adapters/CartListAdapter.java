@@ -38,7 +38,7 @@ public class CartListAdapter extends ArrayAdapter<Product> {
 
             TextView costTextView = (TextView) view.findViewById(R.id.list_view_item_product_cost);
             if (costTextView != null) {
-                costTextView.setText(String.format(Locale.getDefault(), "$%d", product.getCost()));
+                costTextView.setText(String.format(Locale.getDefault(), "$%d", product.getCost()*product.getCount()));
             }
         }
 

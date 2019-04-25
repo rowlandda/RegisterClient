@@ -137,13 +137,33 @@ public class ProductsListingActivity extends AppCompatActivity {
 	}
 
 	public void addProductTask(View view) {
-		Product p = new Product();
+		//creates a list of all the lookupcodes in the cart currently
+		ArrayList<String> lookupCodesInCart = new ArrayList<>();
+		for (int i = 0; i < cartProducts.size(); i++) {
+			String lookupCode = cartProducts.get(i).getLookupCode();
+			lookupCodesInCart.add(lookupCode);
+		}
 		//finds the index of the product whose add to cart button we clicked
 	    int position = getProductsListView().getPositionForView((LinearLayout)view.getParent());
 	    if (position >= 0) {
-	    	p = this.productListAdapter.getItem(position);
+            ProductTransition p = new ProductTransition(this.productListAdapter.getItem(position));
+            String itemCode = p.getLookupCode();
+            if (lookupCodesInCart.contains(itemCode)){//then we already have at least one of this item in the cart
+                int index = 0;
+                //find the index of the item in the local cart
+                for (int i = 0; i < cartProducts.size(); i++){
+                	if (cartProducts.get(i).getLookupCode().equals(itemCode)){
+                		index = i;
+					}
+				}
+                int count = cartProducts.get(index).getCount();
+                cartProducts.get(index).setCount(count+1);//increment the count
+			}
+            else{//we have a new item to add to the cart
+            	p.setCount(1);
+            	cartProducts.add(p);
+			}
 		}
-		cartProducts.add(new ProductTransition(p));
 	}
 
 	public void viewCart(View view) {

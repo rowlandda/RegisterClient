@@ -84,7 +84,7 @@ public class Product implements ConvertToJsonInterface, LoadFromJsonInterface<Pr
 
 		this.lookupCode = rawJsonObject.optString(ProductFieldName.LOOKUP_CODE.getFieldName());
 		this.count = rawJsonObject.optInt(ProductFieldName.COUNT.getFieldName());
-		this.cost = rawJsonObject.optInt(ProductFieldName.COST.getFieldName());
+		this.cost = rawJsonObject.optInt(ProductFieldName.PRICE.getFieldName());
 		value = rawJsonObject.optString(ProductFieldName.CREATED_ON.getFieldName());
 		if (!StringUtils.isBlank(value)) {
 			try {
@@ -105,6 +105,7 @@ public class Product implements ConvertToJsonInterface, LoadFromJsonInterface<Pr
 			jsonObject.put(ProductFieldName.ID.getFieldName(), this.id.toString());
 			jsonObject.put(ProductFieldName.LOOKUP_CODE.getFieldName(), this.lookupCode);
 			jsonObject.put(ProductFieldName.COUNT.getFieldName(), this.count);
+			jsonObject.put(ProductFieldName.PRICE.getFieldName(), this.cost);
 			jsonObject.put(ProductFieldName.CREATED_ON.getFieldName(),
 					(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US)).format(this.createdOn));
 		} catch (JSONException e) {
