@@ -36,7 +36,7 @@ public class ProductsListingActivity extends AppCompatActivity {
 	private List<Product> searchedProducts;
 	private List<Product> allProducts;
 	private ProductListAdapter productListAdapter;
-	private ArrayList<ProductTransition> cartProducts;  //contains the contents of the cart
+	private ArrayList<ProductTransition> cartProducts;
 
 	//===========================================================
 	//Adds Menu at the top

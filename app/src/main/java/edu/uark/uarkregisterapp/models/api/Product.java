@@ -84,7 +84,7 @@ public class Product implements ConvertToJsonInterface, LoadFromJsonInterface<Pr
 
 		this.lookupCode = rawJsonObject.optString(ProductFieldName.LOOKUP_CODE.getFieldName());
 		this.count = rawJsonObject.optInt(ProductFieldName.COUNT.getFieldName());
-
+		this.cost = rawJsonObject.optInt(ProductFieldName.COST.getFieldName());
 		value = rawJsonObject.optString(ProductFieldName.CREATED_ON.getFieldName());
 		if (!StringUtils.isBlank(value)) {
 			try {
@@ -116,6 +116,7 @@ public class Product implements ConvertToJsonInterface, LoadFromJsonInterface<Pr
 
 	public Product() {
 		this.count = -1;
+		this.cost = -1;
 		this.lookupCode = "";
 		this.id = new UUID(0, 0);
 		this.createdOn = new Date();
@@ -124,6 +125,7 @@ public class Product implements ConvertToJsonInterface, LoadFromJsonInterface<Pr
 	public Product(ProductTransition productTransition) {
 		this.id = productTransition.getId();
 		this.count = productTransition.getCount();
+		this.cost = productTransition.getCost();
 		this.createdOn = productTransition.getCreatedOn();
 		this.lookupCode = productTransition.getLookupCode();
 	}

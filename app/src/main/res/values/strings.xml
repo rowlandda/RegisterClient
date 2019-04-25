@@ -73,5 +73,6 @@
     <string name="view_cart">VIEW CART</string>
     <string name="keep_shopping">KEEP SHOPPING</string>
     <string name="home_icon">Home</string>
+    <string name="Welcome_text">Welcome </string>
 
 </resources>

@@ -20,6 +20,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.uark.uarkregisterapp.adapters.CartListAdapter;
 import edu.uark.uarkregisterapp.adapters.ProductListAdapter;
 import edu.uark.uarkregisterapp.models.api.ApiResponse;
 import edu.uark.uarkregisterapp.models.api.Product;
@@ -29,7 +30,7 @@ import edu.uark.uarkregisterapp.models.transition.ProductTransition;
 
 public class ShoppingCartActivity extends AppCompatActivity {
     private EmployeeTransition currentEmployeeTransition;
-    private ProductListAdapter productListAdapter;
+    private CartListAdapter productListAdapter;
     private List<ProductTransition> cartTransition; //contains the contents of the cart
     private List<Product> cartProducts;
 
@@ -80,7 +81,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
             Product p = new Product(cartTransition.get(i));
             cartProducts.add(p);
         }
-        this.productListAdapter = new ProductListAdapter(this, this.cartProducts);
+        this.productListAdapter = new CartListAdapter(this, this.cartProducts);
         this.currentEmployeeTransition = this.getIntent().getParcelableExtra("current_employee");
         this.getProductsListView().setAdapter(this.productListAdapter);
     }

@@ -12,7 +12,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -65,6 +68,19 @@ public class HomeScreen extends AppCompatActivity {
     }
     //End Menu
     //===========================================================
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        String welcome_msg = "Welcome "
+                            + this.currentEmployeeTransition.getFname()
+                            + "Make Some Sales!!!" ;
+        this.getEmployeeTextView().setText(welcome_msg);
+    }
+
+    private TextView getEmployeeTextView() {
+        return (TextView)this.findViewById(R.id.welcome_message_HomeScreen);
+    }
 
     public void startTransactionOnClick(View view) {
         Intent intent = new Intent(getApplicationContext(), ProductsListingActivity.class);

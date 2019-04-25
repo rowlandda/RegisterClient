@@ -9,13 +9,13 @@
 
     <TextView
         android:id="@+id/welcome_message_HomeScreen"
-        android:layout_width="253dp"
+        android:layout_width="256dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="@string/welcome_message_HomeScreen"
         android:textSize="26sp" />
 
-    //Button design for Start Transaction
+    <!--Button design for Start Transaction-->
     <Button
         android:id="@+id/start_trans_button"
         android:layout_width="200dp"
@@ -27,7 +27,7 @@
         android:onClick="startTransactionOnClick"
         android:text="@string/start_Trans" />
 
-    //Button design for Create New Employee
+    <!--Button design for Create New Employee-->
     <Button
         android:id="@+id/create_employee_Home_button"
         android:layout_width="200dp"
@@ -39,7 +39,7 @@
         android:onClick="createNewEmployeeButton"
         android:text="@string/create_new_employee" />
 
-    //Button Design for Product Sales Report
+    <!--Button Design for Product Sales Report-->
     <Button
         android:id="@+id/sales_report_Product_button"
         android:layout_width="200dp"
@@ -63,7 +63,7 @@
         android:onClick="salesReportCashierOnClick"
         android:text="@string/cashier_report" />
 
-    //Button design for Log Out
+    <!--Button design for Log Out-->
     <Button
         android:id="@+id/LogOut_button"
         android:layout_width="150dp"
