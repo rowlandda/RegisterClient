@@ -2,6 +2,8 @@ package edu.uark.uarkregisterapp;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -16,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -141,7 +144,7 @@ public class ProductsListingActivity extends AppCompatActivity {
 	}
 
 	public void addProductTask(View view) {
-		//creates a list of all the lookupcodes in the cart currently
+		//creates a list of all the lookupcodes in the cart currently to check if item already there
 		ArrayList<String> lookupCodesInCart = new ArrayList<>();
 		for (int i = 0; i < cartProducts.size(); i++) {
 			String lookupCode = cartProducts.get(i).getLookupCode();
@@ -167,6 +170,7 @@ public class ProductsListingActivity extends AppCompatActivity {
             	p.setCount(1);
             	cartProducts.add(p);
 			}
+			Toast.makeText(this, R.string.item_added_to_cart, Toast.LENGTH_SHORT).show();
 		}
 	}
 
