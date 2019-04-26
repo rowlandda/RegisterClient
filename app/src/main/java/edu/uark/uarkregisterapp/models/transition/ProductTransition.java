@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -13,6 +14,7 @@ import edu.uark.uarkregisterapp.commands.converters.UUIDToByteConverterCommand;
 import edu.uark.uarkregisterapp.models.api.Product;
 
 public class ProductTransition implements Parcelable {
+
 	private UUID id;
 	public UUID getId() {
 		return this.id;
@@ -39,12 +41,11 @@ public class ProductTransition implements Parcelable {
 		this.count = count;
 		return this;
 	}
-	private int costpart1, costpart2;
+
 	private double cost;
 	public double getCost() {
-		String temp = costpart1 + "." + costpart2;
-		this.cost = Double.valueOf(temp);
-		return this.cost;}
+		return this.cost;
+	}
 	public ProductTransition setCost(double cost) {
 		this.cost = cost;
 		return this;
@@ -103,9 +104,7 @@ public class ProductTransition implements Parcelable {
 		this.id = (new ByteToUUIDConverterCommand()).setValueToConvert(productTransitionParcel.createByteArray()).execute();
 		this.lookupCode = productTransitionParcel.readString();
 		this.count = productTransitionParcel.readInt();
-		//this.cost = Double.valueOf(productTransitionParcel.readString());
-		this.costpart1 = productTransitionParcel.readInt();
-		this.costpart2 = productTransitionParcel.readInt();
+		this.cost = productTransitionParcel.readDouble();
 		this.createdOn = new Date();
 		this.createdOn.setTime(productTransitionParcel.readLong());
 	}

@@ -16,6 +16,8 @@ import edu.uark.uarkregisterapp.R;
 import edu.uark.uarkregisterapp.models.api.Product;
 
 public class ProductListAdapter extends ArrayAdapter<Product> {
+
+	private static DecimalFormat df2 = new DecimalFormat("#.00");
 	@NonNull
 	@Override
 	public View getView(int position, View convertView, @NonNull ViewGroup parent) {
@@ -36,10 +38,9 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
 			if (countTextView != null) {
 				countTextView.setText(String.format(Locale.getDefault(), "%d", product.getCount()));
 			}
-			DecimalFormat format = new DecimalFormat("#.00");
 			TextView costTextView = (TextView) view.findViewById(R.id.list_view_item_product_cost);
 			if (costTextView != null) {
-				costTextView.setText(String.format(Locale.getDefault(), "$" +format.format(product.getCost()), product.getCost()));
+				costTextView.setText(String.format(Locale.getDefault(), "$" +df2.format(product.getCost())));
 			}
 		}
 

@@ -19,6 +19,7 @@ public class CartListAdapter extends ArrayAdapter<Product> {
     @NonNull
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+        DecimalFormat df2 = new DecimalFormat("#.00");
         View view = convertView;
         if (view == null) {
             LayoutInflater inflater = LayoutInflater.from(this.getContext());
@@ -36,10 +37,10 @@ public class CartListAdapter extends ArrayAdapter<Product> {
             if (countTextView != null) {
                 countTextView.setText(String.format(Locale.getDefault(), "%d", product.getCount()));
             }
-            DecimalFormat format = new DecimalFormat("#.00");
             TextView costTextView = (TextView) view.findViewById(R.id.list_view_item_product_cost);
             if (costTextView != null) {
-                costTextView.setText(String.format(Locale.getDefault(), "$%f", product.getCost()*product.getCount()));
+                double total = product.getCost() * product.getCount();
+                costTextView.setText(String.format(Locale.getDefault(), "$"+ df2.format(total)));
             }
         }
 
