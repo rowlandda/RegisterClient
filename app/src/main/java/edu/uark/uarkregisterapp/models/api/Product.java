@@ -53,12 +53,12 @@ public class Product implements ConvertToJsonInterface, LoadFromJsonInterface<Pr
 		return this;
 	}
 
+	private double cost;
 	//==================================================
 	//===Cost Getter and Setter
 	//==================================================
-	private int cost;
-	public int getCost() { return this.cost;}
-	public Product setCost(int cost) {
+	public double getCost() { return this.cost;}
+	public Product setCost(double cost) {
 		this.cost = cost;
 		return this;
 	}
@@ -84,7 +84,7 @@ public class Product implements ConvertToJsonInterface, LoadFromJsonInterface<Pr
 
 		this.lookupCode = rawJsonObject.optString(ProductFieldName.LOOKUP_CODE.getFieldName());
 		this.count = rawJsonObject.optInt(ProductFieldName.COUNT.getFieldName());
-		this.cost = rawJsonObject.optInt(ProductFieldName.PRICE.getFieldName());
+		this.cost = rawJsonObject.optDouble(ProductFieldName.PRICE.getFieldName());
 		value = rawJsonObject.optString(ProductFieldName.CREATED_ON.getFieldName());
 		if (!StringUtils.isBlank(value)) {
 			try {

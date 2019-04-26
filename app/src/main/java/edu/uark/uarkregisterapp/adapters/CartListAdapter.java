@@ -8,6 +8,7 @@ package edu.uark.uarkregisterapp.adapters;
         import android.widget.ArrayAdapter;
         import android.widget.TextView;
 
+        import java.text.DecimalFormat;
         import java.util.List;
         import java.util.Locale;
 
@@ -35,10 +36,10 @@ public class CartListAdapter extends ArrayAdapter<Product> {
             if (countTextView != null) {
                 countTextView.setText(String.format(Locale.getDefault(), "%d", product.getCount()));
             }
-
+            DecimalFormat format = new DecimalFormat("#.00");
             TextView costTextView = (TextView) view.findViewById(R.id.list_view_item_product_cost);
             if (costTextView != null) {
-                costTextView.setText(String.format(Locale.getDefault(), "$%d", product.getCost()*product.getCount()));
+                costTextView.setText(String.format(Locale.getDefault(), "$%f", product.getCost()*product.getCount()));
             }
         }
 
