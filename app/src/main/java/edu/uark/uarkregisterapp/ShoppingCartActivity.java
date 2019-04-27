@@ -19,20 +19,27 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import edu.uark.uarkregisterapp.adapters.CartListAdapter;
 import edu.uark.uarkregisterapp.adapters.ProductListAdapter;
 import edu.uark.uarkregisterapp.models.api.ApiResponse;
 import edu.uark.uarkregisterapp.models.api.Product;
+import edu.uark.uarkregisterapp.models.api.Transaction;
 import edu.uark.uarkregisterapp.models.api.services.ProductService;
+import edu.uark.uarkregisterapp.models.api.services.TransactionService;
 import edu.uark.uarkregisterapp.models.transition.EmployeeTransition;
 import edu.uark.uarkregisterapp.models.transition.ProductTransition;
+import edu.uark.uarkregisterapp.models.transition.TransactionTransition;
 
 public class ShoppingCartActivity extends AppCompatActivity {
     private EmployeeTransition currentEmployeeTransition;
+    private TransactionTransition transactionTransition = new TransactionTransition();
     private CartListAdapter productListAdapter;
     private List<ProductTransition> cartTransition; //contains the contents of the cart
     private List<Product> cartProducts;
+    private List<Transaction> transactions;
+    private int totalSales;//todo change to double
 
 
     //===========================================================
@@ -74,13 +81,20 @@ public class ShoppingCartActivity extends AppCompatActivity {
     //End Menu
     //===========================================================
 
+    public void updateTotalSales() {
+        this.totalSales = 0;
+        for (int i = 0; i < cartTransition.size(); i++) {
+            this.totalSales += (cartTransition.get(i).getCount() * cartTransition.get(i).getCost());
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_cart);
+        this.transactions = new ArrayList<>();
         this.cartTransition = this.getIntent().getParcelableArrayListExtra("current_transaction");
         this.cartProducts = new ArrayList<>();
-        //convert product transition object to actual products
+        updateTotalSales();
         for (int i = 0; i < cartTransition.size(); i++) {
             Product p = new Product(cartTransition.get(i));
             cartProducts.add(p);
@@ -93,8 +107,8 @@ public class ShoppingCartActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        (new RetrieveProductsTask()).execute();
+        productListAdapter.notifyDataSetChanged();
+        updateTotalSales();
     }
 
     private ListView getProductsListView() {
@@ -102,6 +116,8 @@ public class ShoppingCartActivity extends AppCompatActivity {
     }
 
     public void checkout(View view) {
+        new RetreiveTransactionList().execute();
+        new CreateTransactionTask().execute();
     }
 
     public void clearCart(View view) {
@@ -123,54 +139,93 @@ public class ShoppingCartActivity extends AppCompatActivity {
         this.startActivity(intent);
     }
 
-    private class RetrieveProductsTask extends AsyncTask<Void, Void, ApiResponse<List<Product>>> {
+    private class RetreiveTransactionList extends AsyncTask<Void, ApiResponse<Transaction>, ApiResponse<List<Transaction>>> {
         @Override
         protected void onPreExecute() {
-            this.loadingProductsAlert.show();
         }
 
         @Override
-        protected ApiResponse<List<Product>> doInBackground(Void... params) {
-            ApiResponse<List<Product>> apiResponse = (new ProductService()).getProducts();
-            //todo read from transaction table instead of internal
+        protected ApiResponse<List<Transaction>> doInBackground(Void... params) {
+            ApiResponse<List<Transaction>> apiResponse = (new TransactionService()).getTransactions();
 
             if (apiResponse.isValidResponse()) {
-//                cartProducts.clear();
-//                cartProducts.addAll(apiResponse.getData());
+                transactions.clear();
+                transactions.addAll(apiResponse.getData());
             }
 
             return apiResponse;
         }
 
         @Override
-        protected void onPostExecute(ApiResponse<List<Product>> apiResponse) {
-            if (apiResponse.isValidResponse()) {
-                productListAdapter.notifyDataSetChanged();
-            }
+        protected void onPostExecute(ApiResponse<List<Transaction>> apiResponse) {
+        }
+    }
 
-            this.loadingProductsAlert.dismiss();
-
-            if (!apiResponse.isValidResponse()) {
-                new AlertDialog.Builder(ShoppingCartActivity.this).
-                        setMessage(R.string.alert_dialog_products_load_failure).
-                        setPositiveButton(
-                                R.string.button_dismiss,
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.dismiss();
-                                    }
-                                }
-                        ).
-                        create().
-                        show();
-            }
+    private class CreateTransactionTask extends AsyncTask<Void, Void, Boolean> {
+        @Override
+        protected void onPreExecute() {
+            this.creatingTransactionAlert.show();
         }
 
-        private AlertDialog loadingProductsAlert;
+        //create employee object from the values in the text fields
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            Transaction transaction = (new Transaction()).
+                    setTransactionID(transactions.size()).
+                    setCashierID(currentEmployeeTransition.getEmployeeid()).
+                    setTotalSales(totalSales);
 
-        private RetrieveProductsTask() {
-            this.loadingProductsAlert = new AlertDialog.Builder(ShoppingCartActivity.this).
-                    setMessage(R.string.alert_dialog_products_loading).
+            ApiResponse<Transaction> apiResponse = (
+                    (new TransactionService()).startTransaction(transaction.convertStartTransaction()));
+
+            if (apiResponse.isValidResponse()) {
+                transactionTransition.setTransactionID(apiResponse.getData().getTransactionID());
+                transactionTransition.setCashierID(apiResponse.getData().getCashierID());
+                transactionTransition.setTotalSales(apiResponse.getData().getTotalSales());
+            }
+
+            return apiResponse.isValidResponse();
+        }
+
+        //alert notification information
+        @Override
+        protected void onPostExecute(Boolean successfulSave) {
+            String message;
+
+            creatingTransactionAlert.dismiss();
+
+            if (successfulSave) {
+                message = getString(R.string.alert_transaction_complete);
+            } else {
+                message = getString(R.string.alert_checkout_failed);
+            }
+
+            new AlertDialog.Builder(ShoppingCartActivity.this).
+                    setMessage(message).
+                    setPositiveButton(
+                            R.string.home,
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.dismiss();
+                                }
+
+                            }
+                    ).
+                    create().
+                    show();
+            Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+            intent.putExtra(
+                    "current_employee",
+                    ShoppingCartActivity.this.currentEmployeeTransition
+            );
+            ShoppingCartActivity.this.startActivity(intent);
+        }
+
+        private AlertDialog creatingTransactionAlert;
+
+        private CreateTransactionTask() {
+            this.creatingTransactionAlert = new AlertDialog.Builder(ShoppingCartActivity.this).
+                    setMessage(R.string.alert_dialog_checking_out).
                     create();
         }
     }

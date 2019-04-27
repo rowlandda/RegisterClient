@@ -76,5 +76,8 @@
     <string name="Welcome_text">Welcome </string>
     <string name="item_added_to_cart">Item Added</string>
     <string name="OK">OK</string>
+    <string name="alert_checkout_failed">Checkout Failed!</string>
+    <string name="alert_transaction_complete">Transaction Complete!</string>
+    <string name="alert_dialog_checking_out">Checking out...</string>
 
 </resources>

@@ -14,6 +14,7 @@ package edu.uark.uarkregisterapp.models.api;
         import java.util.Locale;
         import java.util.UUID;
 
+        import edu.uark.uarkregisterapp.models.api.fields.EmployeeFieldName;
         import edu.uark.uarkregisterapp.models.api.fields.TransactionFieldName;
         import edu.uark.uarkregisterapp.models.api.interfaces.ConvertToJsonInterface;
         import edu.uark.uarkregisterapp.models.api.interfaces.LoadFromJsonInterface;
@@ -30,6 +31,33 @@ public class Transaction implements ConvertToJsonInterface, LoadFromJsonInterfac
     }
     public Transaction setId(UUID id) {
         this.id = id;
+        return this;
+    }
+
+    private int transactionID;
+    public int getTransactionID() {
+        return this.transactionID;
+    }
+    public Transaction setTransactionID(int transactionID) {
+        this.transactionID = transactionID;
+        return this;
+    }
+
+    private String cashierID;
+    public String getCashierID() {
+        return this.cashierID;
+    }
+    public Transaction setCashierID(String cashierID) {
+        this.cashierID = cashierID;
+        return this;
+    }
+
+    private int totalSales;
+    public int getTotalSales() {
+        return this.totalSales;
+    }
+    public Transaction setTotalSales(int totalSales) {
+        this.totalSales = totalSales;
         return this;
     }
 
@@ -88,6 +116,10 @@ public class Transaction implements ConvertToJsonInterface, LoadFromJsonInterfac
             this.id = UUID.fromString(value);
         }
 
+        this.transactionID = rawJsonObject.optInt(TransactionFieldName.TRANSACTION_ID.getFieldName());
+        this.cashierID = rawJsonObject.optString(TransactionFieldName.CASHIER_ID.getFieldName());
+        this.totalSales = rawJsonObject.optInt(TransactionFieldName.TOTAL.getFieldName());
+
         this.shoppingCart = new ArrayList<>();
         JSONArray cartArray = rawJsonObject.optJSONArray(TransactionFieldName.SHOPPING_CART.getFieldName());
         try {
@@ -121,6 +153,9 @@ public class Transaction implements ConvertToJsonInterface, LoadFromJsonInterfac
 
         try {
             jsonObject.put(TransactionFieldName.ID.getFieldName(), this.id.toString());
+            jsonObject.put(TransactionFieldName.TRANSACTION_ID.getFieldName(), this.transactionID);
+            jsonObject.put(TransactionFieldName.CASHIER_ID.getFieldName(), this.cashierID);
+            jsonObject.put(TransactionFieldName.TOTAL.getFieldName(), this.totalSales);
             jsonObject.put(TransactionFieldName.SHOPPING_CART.getFieldName(), this.shoppingCart.toArray());
             jsonObject.put(TransactionFieldName.CREATED_ON.getFieldName(),
                     (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US)).format(this.createdOn));
@@ -131,14 +166,34 @@ public class Transaction implements ConvertToJsonInterface, LoadFromJsonInterfac
         return jsonObject;
     }
 
+    public JSONObject convertStartTransaction() {
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.put(TransactionFieldName.TRANSACTION_ID.getFieldName(), this.transactionID);
+            jsonObject.put(TransactionFieldName.CASHIER_ID.getFieldName(), this.cashierID);
+            jsonObject.put(TransactionFieldName.TOTAL.getFieldName(), this.totalSales);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
+    }
+
     public Transaction() {
         this.id = new UUID(0, 0);
+        this.transactionID = -1;
+        this.cashierID = "-1";
+        this.totalSales = 0;
         this.createdOn = new Date();
         this.shoppingCart = new ArrayList<>();
     }
 
     public Transaction(List<Product> productList){
         this.id = new UUID(0,0);
+        this.transactionID = -1;
+        this.cashierID = "-1";
+        this.totalSales = 0;
         this.createdOn = new Date();
         this.shoppingCart = new ArrayList<>();
         for (int i = 0; i < productList.size(); i++) {
@@ -148,6 +203,9 @@ public class Transaction implements ConvertToJsonInterface, LoadFromJsonInterfac
 
     public Transaction(TransactionTransition transactionTransition) {
         this.id = transactionTransition.getId();
+        this.transactionID = transactionTransition.getTransactionID();
+        this.cashierID = transactionTransition.getCashierID();
+        this.totalSales = transactionTransition.getTotalSales();
         this.createdOn = transactionTransition.getCreatedOn();
         this.shoppingCart = new ArrayList<>();
         for (int i = 0; i < transactionTransition.getShoppingCart().size(); i++){

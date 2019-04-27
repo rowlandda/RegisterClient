@@ -24,6 +24,34 @@ public class TransactionTransition implements Parcelable {
         return this;
     }
 
+    private int transactionID;
+    public int getTransactionID() {
+        return this.transactionID;
+    }
+    public TransactionTransition setTransactionID(int transactionID) {
+        this.transactionID = transactionID;
+        return this;
+    }
+
+    private String cashierID;
+    public String getCashierID() {
+        return this.cashierID;
+    }
+    public TransactionTransition setCashierID(String cashierID) {
+        this.cashierID = cashierID;
+        return this;
+    }
+
+    private int totalSales;
+    public int getTotalSales() {
+        return this.totalSales;
+    }
+    public TransactionTransition setTotalSales(int totalSales) {
+        this.totalSales = totalSales;
+        return this;
+    }
+
+
     private Date createdOn;
     public Date getCreatedOn() {
         return this.createdOn;
@@ -42,6 +70,9 @@ public class TransactionTransition implements Parcelable {
     @Override
     public void writeToParcel(Parcel destination, int flags) {
         destination.writeByteArray((new UUIDToByteConverterCommand()).setValueToConvert(this.id).execute());
+        destination.writeInt(this.transactionID);
+        destination.writeString(this.cashierID);
+        destination.writeInt(this.totalSales);
         destination.writeLong(this.createdOn.getTime());
         destination.writeTypedList(this.shoppingCart);
     }
@@ -63,12 +94,19 @@ public class TransactionTransition implements Parcelable {
 
     public TransactionTransition() {
         this.id = new UUID(0, 0);
+        this.transactionID = -1;
+        this.cashierID = "-1";
+        //todo change all these to double
+        this.totalSales = 0;
         this.createdOn = new Date();
         this.shoppingCart = new ArrayList<>();
     }
 
     public TransactionTransition(Transaction transaction) {
         this.id = transaction.getId();
+        this.transactionID = transaction.getTransactionID();
+        this.cashierID = transaction.getCashierID();
+        this.totalSales = transaction.getTotalSales();
         this.createdOn = transaction.getCreatedOn();
         this.shoppingCart = new ArrayList<>();
         for (int i = 0; i < transaction.getShoppingCart().size(); i++){
@@ -79,6 +117,9 @@ public class TransactionTransition implements Parcelable {
 
     private TransactionTransition(Parcel transactionTransitionParcel) {
         this.id = (new ByteToUUIDConverterCommand()).setValueToConvert(transactionTransitionParcel.createByteArray()).execute();
+        this.transactionID = transactionTransitionParcel.readInt();
+        this.cashierID = transactionTransitionParcel.readString();
+        this.transactionID = transactionTransitionParcel.readInt();
         this.createdOn = new Date();
         this.createdOn.setTime(transactionTransitionParcel.readLong());
         this.shoppingCart = new ArrayList<>();
