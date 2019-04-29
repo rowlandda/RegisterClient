@@ -79,5 +79,6 @@
     <string name="alert_checkout_failed">Checkout Failed!</string>
     <string name="alert_transaction_complete">Transaction Complete!</string>
     <string name="alert_dialog_checking_out">Checking out...</string>
+    <string name="shopping_cart_total">Cart Total:</string>
 
 </resources>

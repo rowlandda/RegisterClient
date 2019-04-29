@@ -42,11 +42,11 @@ public class TransactionTransition implements Parcelable {
         return this;
     }
 
-    private int totalSales;
-    public int getTotalSales() {
+    private double totalSales;
+    public double getTotalSales() {
         return this.totalSales;
     }
-    public TransactionTransition setTotalSales(int totalSales) {
+    public TransactionTransition setTotalSales(double totalSales) {
         this.totalSales = totalSales;
         return this;
     }
@@ -72,7 +72,7 @@ public class TransactionTransition implements Parcelable {
         destination.writeByteArray((new UUIDToByteConverterCommand()).setValueToConvert(this.id).execute());
         destination.writeInt(this.transactionID);
         destination.writeString(this.cashierID);
-        destination.writeInt(this.totalSales);
+        destination.writeDouble(this.totalSales);
         destination.writeLong(this.createdOn.getTime());
         destination.writeTypedList(this.shoppingCart);
     }
@@ -97,7 +97,7 @@ public class TransactionTransition implements Parcelable {
         this.transactionID = -1;
         this.cashierID = "-1";
         //todo change all these to double
-        this.totalSales = 0;
+        this.totalSales = 0.00;
         this.createdOn = new Date();
         this.shoppingCart = new ArrayList<>();
     }

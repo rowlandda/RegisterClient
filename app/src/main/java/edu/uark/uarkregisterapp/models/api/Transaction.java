@@ -52,11 +52,11 @@ public class Transaction implements ConvertToJsonInterface, LoadFromJsonInterfac
         return this;
     }
 
-    private int totalSales;
-    public int getTotalSales() {
+    private double totalSales;
+    public double getTotalSales() {
         return this.totalSales;
     }
-    public Transaction setTotalSales(int totalSales) {
+    public Transaction setTotalSales(double totalSales) {
         this.totalSales = totalSales;
         return this;
     }
@@ -118,7 +118,7 @@ public class Transaction implements ConvertToJsonInterface, LoadFromJsonInterfac
 
         this.transactionID = rawJsonObject.optInt(TransactionFieldName.TRANSACTION_ID.getFieldName());
         this.cashierID = rawJsonObject.optString(TransactionFieldName.CASHIER_ID.getFieldName());
-        this.totalSales = rawJsonObject.optInt(TransactionFieldName.TOTAL.getFieldName());
+        this.totalSales = rawJsonObject.optDouble(TransactionFieldName.TOTAL.getFieldName());
 
         this.shoppingCart = new ArrayList<>();
         JSONArray cartArray = rawJsonObject.optJSONArray(TransactionFieldName.SHOPPING_CART.getFieldName());
@@ -184,7 +184,7 @@ public class Transaction implements ConvertToJsonInterface, LoadFromJsonInterfac
         this.id = new UUID(0, 0);
         this.transactionID = -1;
         this.cashierID = "-1";
-        this.totalSales = 0;
+        this.totalSales = 0.00;
         this.createdOn = new Date();
         this.shoppingCart = new ArrayList<>();
     }
@@ -193,7 +193,7 @@ public class Transaction implements ConvertToJsonInterface, LoadFromJsonInterfac
         this.id = new UUID(0,0);
         this.transactionID = -1;
         this.cashierID = "-1";
-        this.totalSales = 0;
+        this.totalSales = 0.00;
         this.createdOn = new Date();
         this.shoppingCart = new ArrayList<>();
         for (int i = 0; i < productList.size(); i++) {

@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,8 @@ public class ShoppingCartActivity extends AppCompatActivity {
     private List<ProductTransition> cartTransition; //contains the contents of the cart
     private List<Product> cartProducts;
     private List<Transaction> transactions;
-    private int totalSales;//todo change to double
+    private double totalSales;
+    private String total_msg;
 
 
     //===========================================================
@@ -86,6 +88,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
         for (int i = 0; i < cartTransition.size(); i++) {
             this.totalSales += (cartTransition.get(i).getCount() * cartTransition.get(i).getCost());
         }
+        this.total_msg = "$" + this.totalSales;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +105,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
         this.productListAdapter = new CartListAdapter(this, this.cartProducts);
         this.currentEmployeeTransition = this.getIntent().getParcelableExtra("current_employee");
         this.getProductsListView().setAdapter(this.productListAdapter);
+        this.getCartTotalView().setText(this.total_msg);
     }
 
     @Override
@@ -113,6 +117,10 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
     private ListView getProductsListView() {
         return (ListView) this.findViewById(R.id.list_view_shopping_cart);
+    }
+
+    private TextView getCartTotalView() {
+        return (TextView) this.findViewById(R.id.total_view);
     }
 
     public void checkout(View view) {
@@ -207,18 +215,18 @@ public class ShoppingCartActivity extends AppCompatActivity {
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.dismiss();
+                                    Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                                    intent.putExtra(
+                                            "current_employee",
+                                            ShoppingCartActivity.this.currentEmployeeTransition
+                                    );
+                                    ShoppingCartActivity.this.startActivity(intent);
                                 }
 
                             }
                     ).
                     create().
                     show();
-            Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
-            intent.putExtra(
-                    "current_employee",
-                    ShoppingCartActivity.this.currentEmployeeTransition
-            );
-            ShoppingCartActivity.this.startActivity(intent);
         }
 
         private AlertDialog creatingTransactionAlert;
