@@ -25,11 +25,14 @@ import java.util.UUID;
 import edu.uark.uarkregisterapp.adapters.CartListAdapter;
 import edu.uark.uarkregisterapp.adapters.ProductListAdapter;
 import edu.uark.uarkregisterapp.models.api.ApiResponse;
+import edu.uark.uarkregisterapp.models.api.Item;
 import edu.uark.uarkregisterapp.models.api.Product;
 import edu.uark.uarkregisterapp.models.api.Transaction;
+import edu.uark.uarkregisterapp.models.api.services.ItemService;
 import edu.uark.uarkregisterapp.models.api.services.ProductService;
 import edu.uark.uarkregisterapp.models.api.services.TransactionService;
 import edu.uark.uarkregisterapp.models.transition.EmployeeTransition;
+import edu.uark.uarkregisterapp.models.transition.ItemTransition;
 import edu.uark.uarkregisterapp.models.transition.ProductTransition;
 import edu.uark.uarkregisterapp.models.transition.TransactionTransition;
 
@@ -42,7 +45,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
     private List<Transaction> transactions;
     private double totalSales;
     private String total_msg;
-
+    private ItemTransition itemTransition = new ItemTransition();
 
     //===========================================================
     //Adds Menu at the top
@@ -126,6 +129,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
     public void checkout(View view) {
         new RetreiveTransactionList().execute();
         new CreateTransactionTask().execute();
+        new CreateItemsTask().execute();
     }
 
     public void clearCart(View view) {
@@ -235,6 +239,45 @@ public class ShoppingCartActivity extends AppCompatActivity {
             this.creatingTransactionAlert = new AlertDialog.Builder(ShoppingCartActivity.this).
                     setMessage(R.string.alert_dialog_checking_out).
                     create();
+        }
+    }
+
+    private class CreateItemsTask extends AsyncTask<Void, Void, Boolean> {
+        String[] names;
+        String[] quantity;
+
+        @Override
+        protected void onPreExecute() {
+            names = new String[cartTransition.size()];
+            quantity = new String[cartTransition.size()];
+            ArrayList<String> quantities = new ArrayList<>();
+            for (int i = 0; i < cartTransition.size(); i++) {
+                names[i] = cartTransition.get(i).getLookupCode();
+                quantity[i] = (Integer.toString(cartTransition.get(i).getCount()));
+            }
+        }
+
+        //create employee object from the values in the text fields
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            Item item = (new Item());
+            item.setTransactionId(Integer.toString(transactions.size()));
+            item.setProductName(names);
+            item.setQuantity(quantity);
+            item.setTotal(totalSales);
+
+            ApiResponse<Item> apiResponse = (
+                    (new ItemService()).createItem(item));
+
+            if (apiResponse.isValidResponse()) {
+            }
+
+            return apiResponse.isValidResponse();
+        }
+
+        //alert notification information
+        @Override
+        protected void onPostExecute(Boolean successfulSave) {
         }
     }
 }
