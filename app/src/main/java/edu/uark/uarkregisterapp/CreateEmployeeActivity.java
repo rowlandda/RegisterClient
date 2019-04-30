@@ -229,21 +229,20 @@ public class CreateEmployeeActivity extends AppCompatActivity {
                             R.string.home,
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    //needs to go to homepage but not sure how right now
                                     dialog.dismiss();
+                                    new RetrieveEmployeesTask().execute();
+                                    Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                                    intent.putExtra(
+                                            "current_employee",
+                                            CreateEmployeeActivity.this.currentEmployeeTransition
+                                    );
+                                    CreateEmployeeActivity.this.startActivity(intent);
                                 }
 
                             }
                     ).
                     create().
                     show();
-            new RetrieveEmployeesTask().execute();
-            Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
-            intent.putExtra(
-                    "current_employee",
-                    CreateEmployeeActivity.this.currentEmployeeTransition
-            );
-            CreateEmployeeActivity.this.startActivity(intent);
         }
 
         private AlertDialog savingEmployeeAlert;
