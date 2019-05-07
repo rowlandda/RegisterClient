@@ -250,7 +250,6 @@ public class ShoppingCartActivity extends AppCompatActivity {
         protected void onPreExecute() {
             names = new String[cartTransition.size()];
             quantity = new String[cartTransition.size()];
-            ArrayList<String> quantities = new ArrayList<>();
             for (int i = 0; i < cartTransition.size(); i++) {
                 names[i] = cartTransition.get(i).getLookupCode();
                 quantity[i] = (Integer.toString(cartTransition.get(i).getCount()));
